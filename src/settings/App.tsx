@@ -14,6 +14,7 @@ import "./styles.css";
 type SettingsAppProps = {
   repository: OtpRepository;
   preferencesRepository: AppPreferencesRepository;
+  initialSection?: SettingsSection;
 };
 
 type SettingsSection = "general" | "import" | "protection" | "backup" | "about";
@@ -98,9 +99,9 @@ async function downloadJsonFile(data: unknown, filename: string) {
   URL.revokeObjectURL(url);
 }
 
-export function SettingsApp({ repository, preferencesRepository }: SettingsAppProps) {
+export function SettingsApp({ repository, preferencesRepository, initialSection = "general" }: SettingsAppProps) {
   const restoreInputRef = useRef<HTMLInputElement | null>(null);
-  const [activeSection, setActiveSection] = useState<SettingsSection>("general");
+  const [activeSection, setActiveSection] = useState<SettingsSection>(initialSection);
   const [preferences, setPreferences] = useState<AppPreferences | null>(null);
   const [securityState, setSecurityState] = useState<OtpSecurityState>(DEFAULT_SECURITY_STATE);
   const [entryCount, setEntryCount] = useState(0);
