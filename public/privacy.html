@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snap OTP Privacy Policy</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f8fc;
+      --surface: rgba(255, 255, 255, 0.9);
+      --line: rgba(62, 83, 115, 0.14);
+      --text: #16304d;
+      --muted: #607089;
+      --accent: #1f5fe8;
+      --warning-soft: #fff4df;
+      --warning-text: #9a5b10;
+      --shadow: 0 20px 48px rgba(16, 24, 40, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "SF Pro Display", "SF Pro Text", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(83, 138, 255, 0.12), transparent 28%),
+        linear-gradient(180deg, #f9fbff 0%, var(--bg) 100%);
+    }
+
+    a { color: var(--accent); }
+
+    .shell {
+      width: min(880px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 72px;
+    }
+
+    .card {
+      padding: 28px;
+      border-radius: 28px;
+      background: var(--surface);
+      box-shadow: inset 0 0 0 1px var(--line), var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1, h2 { margin: 0; letter-spacing: -0.04em; }
+    h1 { font-size: 34px; margin-bottom: 8px; }
+    h2 { font-size: 22px; margin-top: 26px; margin-bottom: 8px; }
+    p, li { color: var(--muted); line-height: 1.65; font-size: 15px; }
+    .updated { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
+    .divider { margin: 36px 0; border: 0; border-top: 1px solid rgba(62, 83, 115, 0.12); }
+    .warning {
+      margin-top: 14px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: var(--warning-soft);
+      color: var(--warning-text);
+      box-shadow: inset 0 0 0 1px rgba(154, 91, 16, 0.12);
+    }
+    .warning p { margin: 0; color: inherit; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <main class="card">
+      <p class="eyebrow">한국어</p>
+      <h1>Snap OTP 개인정보처리방침</h1>
+      <p class="updated">최종 업데이트: 2026년 4월 19일</p>
+
+      <h2>Snap OTP가 저장하는 데이터</h2>
+      <p>Snap OTP는 사용자가 직접 추가한 TOTP(시간 기반 일회용 비밀번호) 항목만 저장합니다. 각 항목에는 다음 정보가 포함됩니다.</p>
+      <ul>
+        <li>서비스 이름, 계정 이름, 발급자</li>
+        <li>TOTP 시크릿 키</li>
+        <li>설정 값(알고리즘, 자릿수, 주기)</li>
+        <li>표시 설정(마커 색상, 정렬 순서)</li>
+        <li>메타데이터(생성 시각, 수정 시각, 추가 방법)</li>
+      </ul>
+      <p>그 외 개인정보는 수집하지 않습니다. Snap OTP는 별도 서버를 운영하지 않으며, 자체 네트워크 요청으로 OTP 시크릿을 전송하지 않습니다.</p>
+
+      <h2>데이터 저장 위치</h2>
+      <p>
+        Snap OTP는 Chrome 내장 API인 <code>chrome.storage.sync</code>를 사용해 데이터를 저장합니다.
+        사용자가 Chrome 동기화를 켠 경우 데이터는 로그인한 Chrome 프로필을 따라 다른 기기로도 동기화될 수 있습니다.
+      </p>
+      <p>
+        Snap OTP는 선택적으로 <strong>패스프레이즈 보호</strong>를 제공합니다. 이 기능을 켜면 OTP 항목 데이터는 sync 저장 전에 암호화되고,
+        잠금 해제에 필요한 임시 정보는 확장 프로그램의 세션 저장소에만 보관됩니다.
+      </p>
+
+      <div class="warning">
+        <p><strong>중요:</strong> 패스프레이즈 보호를 켜지 않은 기본 모드에서는 TOTP 시크릿이 추가 사용자 패스프레이즈 없이 저장됩니다. Chrome 프로필과 Google 계정은 Snap OTP 보안 경계의 일부입니다.</p>
+      </div>
+
+      <h2>스크린샷 및 클립보드 접근</h2>
+      <p>
+        화면 캡처 기능을 사용할 때 Snap OTP는 현재 탭의 보이는 화면을 캡처하여 사용자가 선택한 영역 안의 QR 코드를 해석합니다.
+        이 이미지는 사용자 기기에서만 처리되며 외부 서버로 전송되지 않습니다.
+      </p>
+      <p>
+        OTP 코드를 복사하면 Snap OTP가 해당 코드를 클립보드에 씁니다. 클립보드 자동 지우기가 켜져 있으면 설정된 시간이 지나고 난 뒤 빈 값으로 덮어씁니다.
+      </p>
+
+      <h2>사용 권한</h2>
+      <ul>
+        <li><strong>storage</strong> — OTP 항목, 설정, 보호 메타데이터 저장</li>
+        <li><strong>activeTab</strong> — 현재 탭 QR 캡처 시작</li>
+        <li><strong>scripting</strong> — QR 선택 오버레이 삽입</li>
+        <li><strong>clipboardWrite</strong> — OTP 코드 복사</li>
+        <li><strong>alarms</strong> — 보호 모드 자동 잠금 처리</li>
+      </ul>
+
+      <h2>데이터 보관 및 삭제</h2>
+      <p>
+        항목은 사용자가 직접 삭제할 때까지 Chrome 저장소에 남아 있습니다. 사용자는 개별 항목 또는 전체 항목을 삭제할 수 있습니다.
+        확장 프로그램을 제거하면 해당 기기의 로컬 데이터는 제거되지만, 동기화 데이터는 Chrome 동기화 전파 시점까지 남아 있을 수 있습니다.
+      </p>
+
+      <h2>외부 서비스 및 추적</h2>
+      <p>Snap OTP는 분석 도구, 광고, 외부 추적 서비스를 사용하지 않습니다. 사용자 데이터를 제3자와 판매하거나 광고 목적으로 사용하지 않습니다.</p>
+
+      <h2>문의 방법</h2>
+      <p>문의나 지원 요청은 GitHub 저장소의 Issues 또는 향후 Chrome Web Store 지원 경로를 통해 받을 예정입니다.</p>
+
+      <hr class="divider" />
+
+      <p class="eyebrow">English</p>
+      <h1>Snap OTP Privacy Policy</h1>
+      <p class="updated">Last updated: April 19, 2026</p>
+
+      <h2>What data Snap OTP stores</h2>
+      <p>Snap OTP stores only the TOTP (time-based one-time password) entries that the user adds. Each entry includes:</p>
+      <ul>
+        <li>Service name, account name, and issuer</li>
+        <li>The TOTP secret key</li>
+        <li>Configuration values such as algorithm, digits, and period</li>
+        <li>Display preferences such as marker color and sort order</li>
+        <li>Metadata such as creation time, last updated time, and import method</li>
+      </ul>
+      <p>No other personal data is collected. Snap OTP does not run a backend service and does not send OTP secrets to developer-owned servers.</p>
+
+      <h2>Where data is stored</h2>
+      <p>
+        Snap OTP stores data using Chrome's built-in <code>chrome.storage.sync</code> API. If Chrome sync is enabled,
+        entries may follow the user's signed-in Chrome profile across devices.
+      </p>
+      <p>
+        Snap OTP also offers optional <strong>passphrase protection</strong>. When enabled, OTP entry data is encrypted before it is written to sync storage,
+        and temporary unlock material is kept only in extension session storage.
+      </p>
+
+      <div class="warning">
+        <p><strong>Important:</strong> In standard mode, TOTP secrets are stored without an additional user passphrase. Your Chrome profile and Google account remain part of the Snap OTP security boundary.</p>
+      </div>
+
+      <h2>Screenshot and clipboard access</h2>
+      <p>
+        When the capture feature is used, Snap OTP captures the visible area of the active tab so the selected QR code can be decoded.
+        This image is processed locally on-device and is not sent to external servers.
+      </p>
+      <p>
+        When the user copies an OTP code, Snap OTP writes that code to the clipboard. If clipboard auto-clear is enabled,
+        it overwrites the clipboard with an empty value after the configured delay.
+      </p>
+
+      <h2>Permissions used</h2>
+      <ul>
+        <li><strong>storage</strong> — Save OTP entries, settings, and protection metadata</li>
+        <li><strong>activeTab</strong> — Start QR capture from the active tab</li>
+        <li><strong>scripting</strong> — Inject the QR selection overlay</li>
+        <li><strong>clipboardWrite</strong> — Copy OTP codes to the clipboard</li>
+        <li><strong>alarms</strong> — Clear temporary unlock state when auto-lock expires</li>
+      </ul>
+
+      <h2>Data retention and deletion</h2>
+      <p>
+        Entries remain in Chrome storage until the user deletes them. Users can delete individual entries or all entries at once.
+        Removing the extension removes locally stored data from that device, while synced data may persist until Chrome sync propagates the deletion.
+      </p>
+
+      <h2>Third-party services and tracking</h2>
+      <p>Snap OTP does not use analytics, advertising, or external tracking services. It does not sell user data or use it for advertising purposes.</p>
+
+      <h2>Contact</h2>
+      <p>Questions and support requests can be directed to the GitHub repository issues page or, later, the Chrome Web Store support channel.</p>
+    </main>
+  </div>
+</body>
+</html>

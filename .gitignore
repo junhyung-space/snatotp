@@ -1,0 +1,32 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# Claude Code
+.claude/
+.superpowers/
+
+# macOS
+.DS_Store
+
+# environment variables
+.env
+.env.*
+
+# test coverage
+coverage/
+
+# Vite cache
+.vite/
+
+# logs
+*.log
+
+# release artifacts
+release/*.zip
+/snapotp-chrome-web-store-v0.1.0.zip
+
+# local docs
+docs/

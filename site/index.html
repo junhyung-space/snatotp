@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snap OTP</title>
+  <meta
+    name="description"
+    content="Chrome 안에서 QR 가져오기, 화면 캡처, 동기화, 선택형 패스프레이즈 보호를 지원하는 OTP 확장 프로그램 Snap OTP 소개 페이지"
+  />
+  <link rel="icon" href="./assets/snapotp-icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./assets/site.css" />
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="./">
+        <img alt="Snap OTP icon" src="./assets/snapotp-icon.svg" />
+        <span>
+          <strong>Snap OTP</strong>
+          <span>OTP authenticator for Chrome</span>
+        </span>
+      </a>
+      <nav class="topnav" aria-label="Primary">
+        <a href="#features">기능</a>
+        <a href="#security">저장 및 보안</a>
+        <a href="#permissions">권한</a>
+        <a href="./privacy/">개인정보처리방침</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <article class="card hero-copy">
+          <p class="eyebrow">Chrome Extension</p>
+          <h1>브라우저 안에서 바로 쓰는 OTP</h1>
+          <p>
+            Snap OTP는 Chrome 안에서 TOTP 코드를 저장하고 생성할 수 있는 가벼운 확장 프로그램입니다.
+            설정 페이지에서 QR 이미지를 업로드하거나 <code>otpauth://</code> URI를 직접 붙여넣어 계정을 추가할 수 있고,
+            현재 탭의 QR 코드를 선택해서 바로 가져올 수도 있습니다.
+          </p>
+          <p>
+            저장된 항목은 팝업에서 바로 확인할 수 있고, 현재 코드를 복사하거나 항목 이름을 바꾸고 색상을 지정하고 순서를 정리할 수 있습니다.
+            설정 페이지에서는 보호 모드, 백업/복구, 전체 항목 관리까지 함께 처리할 수 있습니다.
+          </p>
+          <div class="cta-row">
+            <a class="button-link primary" href="#availability">Chrome Web Store</a>
+            <a class="button-link secondary" href="./privacy/">Privacy Policy</a>
+            <a class="button-link ghost" href="https://github.com/junhyung-space/snatotp" rel="noopener noreferrer" target="_blank">GitHub</a>
+          </div>
+        </article>
+
+        <aside class="status-stack">
+          <div class="mini-card">
+            <strong>기본 저장 방식</strong>
+            <p><code>chrome.storage.sync</code>를 사용해 항목을 저장하고 Chrome 프로필을 따라 동기화합니다.</p>
+          </div>
+          <div class="mini-card">
+            <strong>선택형 보호 모드</strong>
+            <p>원하면 패스프레이즈 보호를 켜서 저장된 OTP 항목을 암호화하고 팝업 잠금을 사용할 수 있습니다.</p>
+          </div>
+          <div class="mini-card">
+            <strong>서버 없이 처리</strong>
+            <p>QR 디코딩과 TOTP 생성은 모두 사용자 기기에서 처리되며, 개발자 서버로 OTP 시크릿을 보내지 않습니다.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section" id="features">
+        <h2>주요 기능</h2>
+        <p class="section-intro">
+          Snap OTP는 빠른 일상 사용에 맞춘 단순한 흐름을 목표로 합니다. 계정을 추가하고, 코드를 확인하고,
+          필요한 순간에 바로 복사하는 작업을 Chrome 안에서 처리할 수 있습니다.
+        </p>
+        <div class="section-grid">
+          <article class="list-card">
+            <strong>계정 가져오기</strong>
+            <ul>
+              <li>QR 이미지 업로드</li>
+              <li>현재 탭 QR 캡처</li>
+              <li><code>otpauth://</code> URI 직접 입력</li>
+            </ul>
+          </article>
+          <article class="list-card">
+            <strong>팝업에서 바로 사용</strong>
+            <ul>
+              <li>실시간 6자리 코드 보기</li>
+              <li>남은 시간 확인</li>
+              <li>현재 코드 한 번에 복사</li>
+            </ul>
+          </article>
+          <article class="list-card">
+            <strong>항목 관리</strong>
+            <ul>
+              <li>서비스 이름 변경</li>
+              <li>마커 색상 지정</li>
+              <li>드래그로 순서 정리</li>
+            </ul>
+          </article>
+          <article class="list-card">
+            <strong>추가 보호 옵션</strong>
+            <ul>
+              <li>선택형 패스프레이즈 보호</li>
+              <li>팝업 잠금 및 자동 잠금</li>
+              <li>표준 모드와 보호 모드 선택 가능</li>
+            </ul>
+          </article>
+          <article class="list-card">
+            <strong>설정 페이지 관리</strong>
+            <ul>
+              <li>업로드/URL 가져오기 통합</li>
+              <li>백업 내보내기와 병합 복구</li>
+              <li>환경설정, 보호 설정, 전체 삭제 확인</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="security">
+        <h2>저장 및 보안</h2>
+        <p class="section-intro">
+          Snap OTP는 과장된 보안 약속 대신, 현재 구현 범위 안에서 저장 방식과 보안 경계를 명확히 설명합니다.
+        </p>
+        <div class="section-grid">
+          <article class="list-card">
+            <strong>Standard mode</strong>
+            <p>
+              기본 모드에서는 OTP 항목이 <code>chrome.storage.sync</code>에 저장됩니다. 이 방식은 편의성과 동기화를 우선하며,
+              Chrome 프로필과 Google 계정이 인증기 보안 경계의 일부가 됩니다.
+            </p>
+            <div class="pill-row">
+              <span class="pill">Sync storage</span>
+              <span class="pill warning">No extra passphrase</span>
+            </div>
+          </article>
+          <article class="list-card">
+            <strong>Passphrase protection</strong>
+            <p>
+              보호 모드를 켜면 저장된 OTP 항목이 sync 저장 전 암호화되고, 팝업은 패스프레이즈를 입력해야 다시 열립니다.
+              임시 잠금 해제 상태는 세션 저장소에만 유지되며 자동 잠금 시간이 지나면 제거됩니다.
+            </p>
+            <div class="pill-row">
+              <span class="pill success">Encrypted entries</span>
+              <span class="pill">Auto-lock</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="permissions">
+        <h2>권한 요약</h2>
+        <div class="section-grid">
+          <article class="list-card">
+            <strong>저장과 동기화</strong>
+            <ul>
+              <li><code>storage</code> — OTP 항목, 설정, 보호 메타데이터 저장</li>
+              <li><code>alarms</code> — 보호 모드 자동 잠금 처리</li>
+            </ul>
+          </article>
+          <article class="list-card">
+            <strong>가져오기와 복사</strong>
+            <ul>
+              <li><code>activeTab</code> — 현재 탭 QR 캡처 시작</li>
+              <li><code>scripting</code> — QR 선택 오버레이 삽입</li>
+              <li><code>clipboardWrite</code> — OTP 코드 복사</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section availability" id="availability">
+        <h2>배포 상태</h2>
+        <div class="list-card">
+          <strong>Chrome Web Store listing</strong>
+          <p>
+            Snap OTP는 Chrome Web Store 공개를 준비 중입니다. 스토어 심사가 끝나면 이 페이지의 Chrome Web Store 링크를
+            실제 listing URL로 업데이트합니다.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Snap OTP public overview</span>
+      <div class="footer-links">
+        <a href="./privacy/">Privacy Policy</a>
+        <a href="https://github.com/junhyung-space/snatotp/issues" rel="noopener noreferrer" target="_blank">Support</a>
+        <a href="https://github.com/junhyung-space/snatotp" rel="noopener noreferrer" target="_blank">GitHub</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
