@@ -119,11 +119,15 @@ describe("settings app", () => {
     await user.click(screen.getByRole("button", { name: "Import" }));
 
     expect(screen.getByRole("heading", { name: "Import" })).toBeInTheDocument();
+    expect(screen.getByText("Add accounts from QR images or otpauth:// links.")).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: "Upload" })).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Protection" }));
 
     expect(screen.getByRole("heading", { name: "Protection" })).toBeInTheDocument();
+    expect(
+      screen.getByText("Add an optional passphrase to encrypt saved accounts and lock Snap OTP until you unlock it.")
+    ).toBeInTheDocument();
     expect(screen.getAllByText("Passphrase protection").length).toBeGreaterThan(0);
     expect(screen.getByRole("list", { name: "Protection settings" })).toBeInTheDocument();
   });

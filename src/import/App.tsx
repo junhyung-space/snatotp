@@ -27,11 +27,11 @@ async function saveOtpUri(repository: OtpRepository, otpUri: string, sourceType:
   const trimmedOtpUri = otpUri.trim();
 
   if (!trimmedOtpUri) {
-    throw new Error("Paste an otpauth:// URL first");
+    throw new Error("Paste an otpauth:// link first");
   }
 
   if (!trimmedOtpUri.toLowerCase().startsWith("otpauth://")) {
-    throw new Error("Paste a valid otpauth:// URL");
+    throw new Error("Paste a valid otpauth:// link");
   }
 
   const entry = parseOtpUri(trimmedOtpUri, sourceType);
@@ -119,10 +119,10 @@ export function ImportSection({
 
   return (
     <section className="import-panel embedded-import-panel">
-      <p className="import-eyebrow">OTP intake</p>
-      <h2>Add OTP</h2>
+      <p className="import-eyebrow">Import</p>
+      <h2>Add account</h2>
       <p className="import-copy">
-        Upload a QR image or paste an otpauth:// URL. Success stays here so you can keep importing without leaving the page.
+        Upload a QR image or paste an otpauth:// link to add an account without leaving Settings.
       </p>
 
       <div aria-label="Registration method" className="import-tabs" role="tablist">
@@ -206,10 +206,10 @@ export function ImportSection({
               }}
             >
               <label className="url-label" htmlFor="otp-url-input">
-                OTP URL
+                otpauth link
               </label>
               <textarea
-                aria-label="OTP URL"
+                aria-label="otpauth link"
                 className="url-input"
                 id="otp-url-input"
                 placeholder="otpauth://totp/Example:user@example.com?secret=..."
@@ -220,9 +220,11 @@ export function ImportSection({
                   setMessage(null);
                 }}
               />
-              <button className="url-submit" type="submit" disabled={busy}>
-                {busy ? "Adding…" : "Add OTP URL"}
-              </button>
+              <div className="url-form-actions">
+                <button className="url-submit" type="submit" disabled={busy}>
+                  {busy ? "Adding…" : "Add account"}
+                </button>
+              </div>
             </form>
           </section>
         ) : null}

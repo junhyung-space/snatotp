@@ -465,7 +465,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
             <ul aria-label="General settings" className="settings-list">
               <SettingsRow
                 title="Chrome sync storage"
-                description={`${entryCount} item stored`}
+                description={`${entryCount} ${entryCount === 1 ? "account saved" : "accounts saved"}`}
                 trailing={
                   <span className="settings-status-pill">
                     {securityState.protectionEnabled ? "Protected entries" : "Ready"}
@@ -515,7 +515,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
 
               <SettingsRow
                 title="Delete all entries"
-                description="Remove every saved OTP from this browser profile."
+                description="Delete all saved accounts from this browser profile."
                 tone="danger"
                 actions={
                   <button
@@ -535,7 +535,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
           <section className="settings-section">
             <header className="settings-section-header">
               <h2>Import</h2>
-              <p>Bring OTP entries into Snap OTP without using in-page overlays.</p>
+              <p>Add accounts from QR images or otpauth:// links.</p>
             </header>
             <ImportSection repository={repository} onImportSaved={() => refreshState()} />
           </section>
@@ -545,7 +545,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
           <section className="settings-section">
             <header className="settings-section-header">
               <h2>Protection</h2>
-              <p>Passphrase protection</p>
+              <p>Add an optional passphrase to encrypt saved accounts and lock Snap OTP until you unlock it.</p>
             </header>
 
             <ul aria-label="Protection settings" className="settings-list">
@@ -704,7 +704,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
           <section className="settings-section">
             <header className="settings-section-header">
               <h2>Backup &amp; Restore</h2>
-              <p>Export entries and preferences, then merge them back later.</p>
+              <p>Export your saved accounts and preferences, then restore them later.</p>
             </header>
 
             <ul aria-label="Backup settings" className="settings-list">
@@ -744,7 +744,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
           <section className="settings-section">
             <header className="settings-section-header">
               <h2>About</h2>
-              <p>Release info and project links.</p>
+              <p>Version info, support, and project links.</p>
               <p className="settings-meta-text">{`Version ${version}`}</p>
             </header>
 

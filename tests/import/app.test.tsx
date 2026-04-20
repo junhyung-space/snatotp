@@ -74,15 +74,21 @@ describe("import section", () => {
     const user = userEvent.setup();
     const { container } = render(<ImportSection repository={createRepository()} />);
 
+    expect(screen.getByText("Import")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Add account" })).toBeInTheDocument();
+    expect(
+      screen.getByText("Upload a QR image or paste an otpauth:// link to add an account without leaving Settings.")
+    ).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: "Upload" })).toHaveAttribute("aria-selected", "true");
     expect(container.querySelector(".import-stage")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Drop QR image here/i })).toBeInTheDocument();
-    expect(screen.queryByRole("textbox", { name: "OTP URL" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("textbox", { name: "otpauth link" })).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("tab", { name: "URL" }));
 
     expect(screen.getByRole("tab", { name: "URL" })).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByRole("textbox", { name: "OTP URL" })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "otpauth link" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Add account" })).toBeInTheDocument();
   });
 
   it("shows a local success message after a successful QR upload", async () => {
@@ -200,8 +206,8 @@ describe("import section", () => {
     );
 
     await user.click(screen.getByRole("tab", { name: "URL" }));
-    await user.type(screen.getByRole("textbox", { name: "OTP URL" }), otpUrl);
-    await user.click(screen.getByRole("button", { name: "Add OTP URL" }));
+    await user.type(screen.getByRole("textbox", { name: "otpauth link" }), otpUrl);
+    await user.click(screen.getByRole("button", { name: "Add account" }));
 
     await waitFor(() => {
       expect(save).toHaveBeenCalledTimes(1);
@@ -231,8 +237,8 @@ describe("import section", () => {
     );
 
     await user.click(screen.getByRole("tab", { name: "URL" }));
-    await user.type(screen.getByRole("textbox", { name: "OTP URL" }), otpUrl);
-    await user.click(screen.getByRole("button", { name: "Add OTP URL" }));
+    await user.type(screen.getByRole("textbox", { name: "otpauth link" }), otpUrl);
+    await user.click(screen.getByRole("button", { name: "Add account" }));
 
     expect(await screen.findByText("Already added: Test1")).toBeInTheDocument();
   });
@@ -243,12 +249,12 @@ describe("import section", () => {
     render(<ImportSection repository={createRepository()} />);
 
     await user.click(screen.getByRole("tab", { name: "URL" }));
-    await user.type(screen.getByRole("textbox", { name: "OTP URL" }), "https://example.com");
-    await user.click(screen.getByRole("button", { name: "Add OTP URL" }));
-    expect(await screen.findByText("Paste a valid otpauth:// URL")).toBeInTheDocument();
+    await user.type(screen.getByRole("textbox", { name: "otpauth link" }), "https://example.com");
+    await user.click(screen.getByRole("button", { name: "Add account" }));
+    expect(await screen.findByText("Paste a valid otpauth:// link")).toBeInTheDocument();
 
-    await user.type(screen.getByRole("textbox", { name: "OTP URL" }), "x");
+    await user.type(screen.getByRole("textbox", { name: "otpauth link" }), "x");
 
-    expect(screen.queryByText("Paste a valid otpauth:// URL")).not.toBeInTheDocument();
+    expect(screen.queryByText("Paste a valid otpauth:// link")).not.toBeInTheDocument();
   });
 });
