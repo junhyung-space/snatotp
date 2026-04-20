@@ -719,15 +719,25 @@ body {
 
 .empty-state {
   display: grid;
-  gap: 3px;
-  padding: 10px 4px 4px;
-  font-size: 12px;
-  align-content: start;
+  gap: 8px;
+  padding: 24px 12px 10px;
+  font-size: 13px;
+  line-height: 1.55;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  min-height: 180px;
 }
 
 .empty-state strong {
   color: #163150;
-  font-size: 12px;
+  font-size: 17px;
+  letter-spacing: -0.03em;
+}
+
+.empty-state span {
+  max-width: 240px;
+  color: #62748b;
 }
 
 .entry-marker {

@@ -447,8 +447,8 @@ export function App({
       <section aria-label="OTP entries" className="entry-list">
         {entries.length === 0 ? (
           <div className="empty-state">
-            <strong>No codes yet</strong>
-            <span>Use capture or open settings to import your first OTP.</span>
+            <strong>Add your first account</strong>
+            <span>Import a QR code from Settings or capture one from the current page.</span>
           </div>
         ) : (
           entries.map((entry) => {

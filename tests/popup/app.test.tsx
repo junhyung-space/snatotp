@@ -235,6 +235,80 @@ describe("popup app", () => {
     expect(screen.queryByText("Set")).not.toBeInTheDocument();
   });
 
+  it("shows text-only empty state guidance for first import", async () => {
+    render(
+      <App
+        copyText={writeText}
+        preferencesRepository={createPreferencesRepository()}
+        repository={{
+          async getSecurityState() {
+            return {
+              protectionEnabled: false,
+              locked: false,
+              autoLockMs: 30 * 60 * 1000
+            };
+          },
+          async list() {
+            return [];
+          },
+          async save(entry) {
+            return entry;
+          },
+          async rename() {
+            return undefined;
+          },
+          async delete() {
+            return undefined;
+          },
+          async deleteAll() {
+            return undefined;
+          },
+          async unlock() {
+            return {
+              protectionEnabled: false,
+              locked: false,
+              autoLockMs: 30 * 60 * 1000
+            };
+          },
+          async lock() {
+            return {
+              protectionEnabled: false,
+              locked: false,
+              autoLockMs: 30 * 60 * 1000
+            };
+          },
+          async enableProtection() {
+            return {
+              protectionEnabled: true,
+              locked: true,
+              autoLockMs: 30 * 60 * 1000
+            };
+          },
+          async changePassphrase() {
+            return {
+              protectionEnabled: true,
+              locked: false,
+              autoLockMs: 30 * 60 * 1000
+            };
+          },
+          async disableProtection() {
+            return {
+              protectionEnabled: false,
+              locked: false,
+              autoLockMs: 30 * 60 * 1000
+            };
+          }
+        }}
+        now={() => 0}
+      />
+    );
+
+    expect(await screen.findByText("Add your first account")).toBeInTheDocument();
+    expect(screen.getByText("Import a QR code from Settings or capture one from the current page.")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Capture QR" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Open Settings" })).not.toBeInTheDocument();
+  });
+
   it("opens the extension options page from the settings button", async () => {
     const user = userEvent.setup();
     const openSettingsPage = vi.fn().mockResolvedValue(undefined);
