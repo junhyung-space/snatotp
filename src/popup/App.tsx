@@ -1,7 +1,7 @@
 import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import { START_CAPTURE_FLOW_MESSAGE } from "../background/messages";
 import { createErrorMessage, type FeedbackMessage } from "../shared/feedback";
-import { generateOtpCode, getSecondsRemaining, MARKER_COLOR_OPTIONS } from "../shared/otp";
+import { formatOtpCode, generateOtpCode, getSecondsRemaining, MARKER_COLOR_OPTIONS } from "../shared/otp";
 import {
   createChromeAppPreferencesRepository,
   DEFAULT_APP_PREFERENCES,
@@ -146,6 +146,23 @@ function useClock(now: () => number) {
   return timestamp;
 }
 
+type TimerUrgency = "calm" | "warning" | "urgent";
+
+function getTimerUrgency(remaining: number, period: number): TimerUrgency {
+  const urgentThreshold = Math.min(9, period);
+  const warningThreshold = Math.min(19, period);
+
+  if (remaining <= urgentThreshold) {
+    return "urgent";
+  }
+
+  if (remaining <= warningThreshold) {
+    return "warning";
+  }
+
+  return "calm";
+}
+
 export function App({
   repository,
   preferencesRepository,
@@ -285,7 +302,7 @@ export function App({
   }
 
   async function submitRename(entryId: string) {
-    const nextValue = renameValue.trim();
+    const nextValue = renameValue.trim().slice(0, 50);
 
     if (!nextValue) {
       return;
@@ -447,6 +464,7 @@ export function App({
           entries.map((entry) => {
             const code = generateOtpCode(entry, timestamp);
             const remaining = getSecondsRemaining(entry, timestamp);
+            const timerUrgency = getTimerUrgency(remaining, entry.period);
             const copied = copiedId === entry.id;
             const menuOpen = menuEntryId === entry.id;
 
@@ -473,21 +491,14 @@ export function App({
                 <div className="entry-row">
                   <button
                     aria-label={`${entry.serviceName} ${entry.accountName}`}
-                    className="entry-main"
+                    className="entry-identity"
                     type="button"
                     onClick={() => void handleCopy(entry)}
                   >
-                    <div className="entry-copy">
-                      <EntryMarker entry={entry} />
-                      <div className="entry-text">
-                        <span className="service-name">{entry.serviceName}</span>
-                        <span className="account-name">{entry.accountName}</span>
-                      </div>
-                    </div>
-                    <div className="entry-meta">
-                      <span className="otp-code">{code}</span>
-                      <span className={remaining <= 5 ? "timer danger" : "timer"}>{remaining}s</span>
-                      {copied ? <span className="copied-badge">Copied</span> : null}
+                    <EntryMarker entry={entry} />
+                    <div className="entry-text">
+                      <span className="service-name">{entry.serviceName}</span>
+                      <span className="account-name">{entry.accountName}</span>
                     </div>
                   </button>
 
@@ -505,6 +516,21 @@ export function App({
                     }}
                   >
                     ⋮
+                  </button>
+
+                  <button
+                    className="entry-code-row"
+                    type="button"
+                    onClick={() => void handleCopy(entry)}
+                  >
+                    <div className="entry-code-meta">
+                      <span className="otp-code">{formatOtpCode(code)}</span>
+                      {copied ? <span className="copied-badge">Copied</span> : null}
+                    </div>
+                    <span className={`timer-badge timer-badge-${timerUrgency}`}>
+                      <span aria-hidden="true" className={`timer-dot timer-dot-${timerUrgency}`} />
+                      <span className={`timer timer-${timerUrgency}`}>{remaining}s</span>
+                    </span>
                   </button>
                 </div>
 
@@ -578,8 +604,9 @@ export function App({
                 aria-label="Name"
                 autoFocus
                 className="dialog-input"
+                maxLength={50}
                 value={renameValue}
-                onChange={(event) => setRenameValue(event.currentTarget.value)}
+                onChange={(event) => setRenameValue(event.currentTarget.value.slice(0, 50))}
               />
               <div className="dialog-actions">
                 <button

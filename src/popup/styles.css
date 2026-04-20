@@ -87,7 +87,6 @@ body {
 .icon-button,
 .entry-row {
   border: 0;
-  border-radius: 14px;
   background: rgba(255, 255, 255, 0.82);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.7),
@@ -202,42 +201,58 @@ body {
 }
 
 .entry-row {
-  min-height: 58px;
-  padding: 8px 9px 8px 14px;
+  min-height: 78px;
+  padding: 12px 12px 10px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 12px 28px rgba(16, 24, 40, 0.09);
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
+  row-gap: 8px;
+  column-gap: 8px;
   align-items: center;
-  gap: 8px;
-  text-align: left;
   width: 100%;
   box-sizing: border-box;
 }
 
 .density-compact .entry-row {
-  min-height: 50px;
-  padding: 6px 8px 6px 12px;
+  min-height: 72px;
+  padding: 10px 10px 8px;
 }
 
-.entry-main {
+.entry-identity {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
   min-width: 0;
-  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.entry-code-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 0 0 0 38px;
+  min-width: 0;
   border: 0;
   background: transparent;
   color: inherit;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  text-align: left;
   cursor: pointer;
+  text-align: left;
 }
 
-.entry-copy,
-.entry-meta {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  min-width: 0;
+.density-compact .entry-code-row {
+  padding-left: 34px;
 }
 
 .service-name,
@@ -259,14 +274,14 @@ body {
 }
 
 .service-name {
-  font-size: 14px;
+  font-size: 13px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .account-name {
-  font-size: 11.5px;
+  font-size: 11px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -275,7 +290,7 @@ body {
 .otp-code {
   font-size: 20px;
   letter-spacing: 0.06em;
-  text-align: right;
+  text-align: left;
   font-family: "SF Mono", "Menlo", "Monaco", monospace;
 }
 
@@ -283,20 +298,72 @@ body {
   font-size: 18px;
 }
 
-.entry-meta {
-  justify-content: flex-end;
+.entry-code-meta {
+  display: flex;
+  align-items: baseline;
   gap: 8px;
-  flex: 0 0 auto;
-}
-
-.danger {
-  color: #c14b49;
+  min-width: 0;
 }
 
 .timer {
-  min-width: 30px;
-  text-align: right;
+  min-width: 0;
+  text-align: left;
   font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.timer-calm {
+  color: #1f4db3;
+}
+
+.timer-warning {
+  color: #9a5b10;
+}
+
+.timer-urgent {
+  color: #b42318;
+}
+
+.timer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  justify-self: end;
+}
+
+.timer-badge-calm {
+  background: #eef4ff;
+}
+
+.timer-badge-warning {
+  background: #fff4df;
+}
+
+.timer-badge-urgent {
+  background: #fbeaea;
+}
+
+.timer-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+}
+
+.timer-dot-calm {
+  background: #2f6fed;
+}
+
+.timer-dot-warning {
+  background: #f59e0b;
+}
+
+.timer-dot-urgent {
+  background: #ef4444;
 }
 
 .copied-badge {
@@ -319,12 +386,13 @@ body {
 }
 
 .menu-button {
-  width: 34px;
-  height: 34px;
+  width: 28px;
+  height: 28px;
+  margin-top: 0;
   border-radius: 999px;
-  background: rgba(248, 251, 255, 0.62);
+  background: #f3f7fc;
   color: #708098;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1;
 }
 
@@ -741,13 +809,13 @@ body {
 }
 
 .entry-marker {
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
   display: grid;
   place-items: center;
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.04em;
   box-shadow:
@@ -757,10 +825,10 @@ body {
 }
 
 .density-compact .entry-marker {
-  width: 28px;
-  height: 28px;
-  flex-basis: 28px;
-  font-size: 9px;
+  width: 26px;
+  height: 26px;
+  flex-basis: 26px;
+  font-size: 8px;
 }
 
 .color-grid {

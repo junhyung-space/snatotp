@@ -72,6 +72,11 @@ export function generateOtpCode(entry: OtpEntry, now: number) {
   return totp.generate({ timestamp: now });
 }
 
+export function formatOtpCode(code: string) {
+  const mid = Math.ceil(code.length / 2);
+  return `${code.slice(0, mid)} ${code.slice(mid)}`;
+}
+
 export function getSecondsRemaining(entry: OtpEntry, now: number) {
   const elapsedSeconds = Math.floor(now / 1000);
   const remainder = elapsedSeconds % entry.period;

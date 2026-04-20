@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { App } from "../../src/popup/App";
@@ -24,6 +24,16 @@ const entryB = {
   createdAt: 20,
   updatedAt: 20,
   sortOrder: 1
+};
+
+const longEntry = {
+  ...parseOtpUri(
+    "otpauth://totp/Amazon%20Web%20Services%20Production%20Account:infra-admin@snapotp-company-example.com?secret=JBSWY3DPEHPK3PXP&issuer=Amazon%20Web%20Services%20Production%20Account",
+    "upload"
+  ),
+  createdAt: 30,
+  updatedAt: 30,
+  sortOrder: 2
 };
 
 function createRepository(initialEntries = [entryA]) {
@@ -343,6 +353,29 @@ describe("popup app", () => {
     expect(await screen.findByText("Renamed")).toBeInTheDocument();
   });
 
+  it("limits the service name to 50 characters when renaming", async () => {
+    const user = userEvent.setup();
+    const repository = createRepository();
+    const longName = "A".repeat(60);
+
+    render(<App copyText={writeText} repository={repository} now={() => 0} />);
+
+    await user.click(await screen.findByRole("button", { name: "Manage Example" }));
+    await user.click(screen.getByRole("menuitem", { name: "Rename" }));
+
+    const input = screen.getByRole("textbox", { name: "Name" });
+    await user.clear(input);
+    await user.type(input, longName);
+
+    expect(input).toHaveValue("A".repeat(50));
+
+    await user.keyboard("{Enter}");
+
+    await waitFor(() => {
+      expect(repository.entries[0].serviceName).toBe("A".repeat(50));
+    });
+  });
+
   it("deletes an entry after compact dialog confirmation", async () => {
     const user = userEvent.setup();
 
@@ -434,6 +467,40 @@ describe("popup app", () => {
       expect(repository.entries[0].markerColor).toBe("#ffffff");
     });
     expect(screen.getByLabelText("Example color marker")).toHaveStyle({ background: "#ffffff" });
+  });
+
+  it("renders a compact split card with the code row below the identity block", async () => {
+    render(<App copyText={writeText} repository={createRepository([longEntry])} now={() => 0} />);
+
+    const entryButton = await screen.findByRole("button", {
+      name: /Amazon Web Services Production Account infra-admin@snapotp-company-example.com/i
+    });
+    const entryRow = entryButton.closest(".entry-row")!;
+
+    expect(within(entryButton).getByText("Amazon Web Services Production Account")).toBeInTheDocument();
+    expect(within(entryButton).getByText("infra-admin@snapotp-company-example.com")).toBeInTheDocument();
+    expect(within(entryRow).getByText("282 760")).toBeInTheDocument();
+    expect(within(entryRow).getByText("30s")).toBeInTheDocument();
+    expect(entryRow.querySelector(".entry-code-row")).not.toBeNull();
+    expect(entryRow.querySelector(".entry-code-meta")).not.toBeNull();
+    expect(entryRow.querySelector(".timer-badge")).not.toBeNull();
+    expect(entryRow.querySelector(".timer-dot")).not.toBeNull();
+    expect(entryRow.querySelector(".timer-badge-calm")).not.toBeNull();
+    expect(entryRow.querySelector(".timer-rail")).toBeNull();
+  });
+
+  it("switches timer badge urgency as the refresh time gets closer", async () => {
+    const { rerender } = render(<App copyText={writeText} repository={createRepository()} now={() => 11_000} />);
+
+    const warningTimer = await screen.findByText("19s");
+    expect(warningTimer).toHaveClass("timer", "timer-warning");
+    expect(warningTimer.closest(".timer-badge")).toHaveClass("timer-badge-warning");
+
+    rerender(<App copyText={writeText} repository={createRepository()} now={() => 21_000} />);
+
+    const urgentTimer = await screen.findByText("9s");
+    expect(urgentTimer).toHaveClass("timer", "timer-urgent");
+    expect(urgentTimer.closest(".timer-badge")).toHaveClass("timer-badge-urgent");
   });
 
   it("persists drag and drop entry order changes", async () => {
