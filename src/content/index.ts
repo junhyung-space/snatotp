@@ -27,32 +27,113 @@ function sendSelection(selection?: CaptureSelection, cancelled = false) {
   });
 }
 
+function getCaptureStatusTitle(status: "info" | "success" | "warning" | "error") {
+  if (status === "success") {
+    return "Account added";
+  }
+
+  if (status === "warning") {
+    return "Already added";
+  }
+
+  if (status === "error") {
+    return "Capture failed";
+  }
+
+  return "Capture";
+}
+
+export function createCaptureStatusToast(
+  status: "info" | "success" | "warning" | "error",
+  message: string
+) {
+  const root = document.createElement("div");
+  const badge = document.createElement("span");
+  const copy = document.createElement("div");
+  const title = document.createElement("strong");
+  const body = document.createElement("p");
+
+  root.id = "snapotp-capture-status";
+  root.setAttribute("role", status === "error" ? "alert" : "status");
+  root.style.position = "fixed";
+  root.style.left = "50%";
+  root.style.bottom = "24px";
+  root.style.transform = "translateX(-50%)";
+  root.style.zIndex = "2147483647";
+  root.style.maxWidth = "min(420px, calc(100vw - 32px))";
+  root.style.width = "max-content";
+  root.style.display = "grid";
+  root.style.gridTemplateColumns = "auto minmax(0, 1fr)";
+  root.style.alignItems = "start";
+  root.style.gap = "12px";
+  root.style.padding = "14px 16px";
+  root.style.borderRadius = "18px";
+  root.style.background =
+    status === "info"
+      ? "rgba(232, 240, 255, 0.98)"
+      : status === "success"
+        ? "rgba(232, 247, 239, 0.98)"
+        : status === "warning"
+          ? "rgba(255, 244, 223, 0.98)"
+          : "rgba(254, 242, 242, 0.99)";
+  root.style.border =
+    status === "info"
+      ? "1px solid rgba(30, 78, 168, 0.12)"
+      : status === "success"
+        ? "1px solid rgba(20, 108, 67, 0.12)"
+        : status === "warning"
+          ? "1px solid rgba(154, 91, 16, 0.14)"
+          : "1px solid rgba(153, 27, 27, 0.12)";
+  root.style.boxShadow = "0 20px 44px rgba(15, 23, 42, 0.16)";
+  root.style.pointerEvents = "none";
+  root.style.boxSizing = "border-box";
+
+  badge.setAttribute("aria-hidden", "true");
+  badge.style.width = "10px";
+  badge.style.height = "10px";
+  badge.style.marginTop = "5px";
+  badge.style.borderRadius = "999px";
+  badge.style.background =
+    status === "info"
+      ? "#1e4ea8"
+      : status === "success"
+        ? "#146c43"
+        : status === "warning"
+          ? "#9a5b10"
+          : "#991b1b";
+  badge.style.boxShadow = "0 0 0 4px rgba(255, 255, 255, 0.7)";
+
+  copy.style.display = "grid";
+  copy.style.gap = "3px";
+
+  title.textContent = getCaptureStatusTitle(status);
+  title.style.margin = "0";
+  title.style.color =
+    status === "info"
+      ? "#173b7a"
+      : status === "success"
+        ? "#175c3d"
+        : status === "warning"
+          ? "#8a5514"
+          : "#8f2626";
+  title.style.font = "700 14px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+  title.style.letterSpacing = "-0.01em";
+
+  body.textContent = message;
+  body.style.margin = "0";
+  body.style.color = "#45566f";
+  body.style.font = "600 13px/1.45 -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+
+  copy.append(title, body);
+  root.append(badge, copy);
+
+  return root;
+}
+
 function showCaptureStatus(status: "info" | "success" | "warning" | "error", message: string) {
   statusRoot?.remove();
 
-  const root = document.createElement("div");
-  root.id = "snapotp-capture-status";
-  root.textContent = message;
-  root.style.position = "fixed";
-  root.style.left = "50%";
-  root.style.top = "18px";
-  root.style.transform = "translateX(-50%)";
-  root.style.zIndex = "2147483647";
-  root.style.maxWidth = "min(520px, calc(100vw - 32px))";
-  root.style.padding = "11px 15px";
-  root.style.borderRadius = "999px";
-  root.style.background =
-    status === "info"
-      ? "rgba(29, 78, 216, 0.96)"
-      : status === "success"
-        ? "rgba(20, 108, 67, 0.96)"
-        : status === "warning"
-          ? "rgba(180, 83, 9, 0.96)"
-          : "rgba(193, 75, 73, 0.96)";
-  root.style.color = "#fff";
-  root.style.font = "700 13px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
-  root.style.boxShadow = "0 18px 42px rgba(15, 23, 42, 0.22)";
-  root.style.pointerEvents = "none";
+  const root = createCaptureStatusToast(status, message);
 
   document.documentElement.append(root);
   statusRoot = root;
@@ -179,18 +260,20 @@ function openCaptureOverlay() {
   });
 }
 
-chrome.runtime.onMessage.addListener((message) => {
-  if (message?.type === OPEN_CAPTURE_OVERLAY_MESSAGE) {
-    openCaptureOverlay();
-  }
+if (typeof chrome !== "undefined" && chrome.runtime?.onMessage) {
+  chrome.runtime.onMessage.addListener((message) => {
+    if (message?.type === OPEN_CAPTURE_OVERLAY_MESSAGE) {
+      openCaptureOverlay();
+    }
 
-  if (message?.type === CAPTURE_STATUS_MESSAGE) {
-    const status =
-      message.status === "info" || message.status === "success" || message.status === "warning"
-        ? message.status
-        : "error";
-    showCaptureStatus(status, String(message.message ?? "Capture failed"));
-  }
+    if (message?.type === CAPTURE_STATUS_MESSAGE) {
+      const status =
+        message.status === "info" || message.status === "success" || message.status === "warning"
+          ? message.status
+          : "error";
+      showCaptureStatus(status, String(message.message ?? "Capture failed"));
+    }
 
-  return undefined;
-});
+    return undefined;
+  });
+}
