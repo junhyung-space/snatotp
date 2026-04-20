@@ -1,6 +1,6 @@
 # Snap OTP
 
-Snap OTP is a Chrome extension for storing and generating OTP codes inside Chrome, with a quick popup for daily use and a full settings page for import, protection, backup, and account management.
+Snap OTP is a lightweight Chrome extension for storing and generating time-based one-time passwords directly in Chrome, with a quick popup for daily use and a full settings page for import, protection, backup, and account management.
 
 ## Current MVP scope
 
@@ -36,6 +36,18 @@ pnpm build
 - Homepage: `https://junhyung-space.github.io/snatotp/`
 - Privacy Policy: `https://junhyung-space.github.io/snatotp/privacy/`
 - Support: `https://github.com/junhyung-space/snatotp/issues`
+
+## Store Description
+
+Snap OTP is a lightweight Chrome extension for storing and generating time-based one-time passwords (TOTP) directly in Chrome.
+
+Add accounts from the Settings page by uploading a QR image or pasting an `otpauth://` link, or capture a QR code directly from the current tab. The popup stays focused on quick everyday use, while Settings handles import, passphrase protection, backup and restore, and full account management. Once an account is saved, you can view live 6-digit codes in the popup, copy the current code, rename entries, change marker colors, and reorder the list.
+
+Snap OTP stores entries in Chrome extension storage so they can follow your signed-in Chrome profile. If you want extra protection, you can turn on an optional passphrase to encrypt saved entries and lock Snap OTP until you unlock it again. Settings also supports backup export, merge-safe restore for saved accounts and app preferences, and a confirmation step before deleting all saved accounts.
+
+QR decoding and TOTP generation happen locally on your device. Snap OTP does not use a backend service and does not send OTP secrets to servers operated by the developer.
+
+Important security note: in standard mode, OTP secrets are stored in `chrome.storage.sync`, which means your Chrome profile and Google account are part of your security boundary. Optional passphrase protection changes how saved entries are protected in storage, but it does not remove your Chrome profile from that boundary.
 
 ## Security note
 
