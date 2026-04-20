@@ -1,7 +1,7 @@
 import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import { START_CAPTURE_FLOW_MESSAGE } from "../background/messages";
 import { createErrorMessage, type FeedbackMessage } from "../shared/feedback";
-import { generateOtpCode, getSecondsRemaining, MARKER_COLORS } from "../shared/otp";
+import { generateOtpCode, getSecondsRemaining, MARKER_COLOR_OPTIONS } from "../shared/otp";
 import {
   createChromeAppPreferencesRepository,
   DEFAULT_APP_PREFERENCES,
@@ -22,14 +22,7 @@ type AppProps = {
   closePopup?: () => void;
 };
 
-const COLOR_OPTIONS = [
-  { label: "Blue", value: MARKER_COLORS[0] },
-  { label: "Teal", value: MARKER_COLORS[1] },
-  { label: "Orange", value: MARKER_COLORS[2] },
-  { label: "Violet", value: MARKER_COLORS[3] },
-  { label: "Rose", value: MARKER_COLORS[4] },
-  { label: "Green", value: MARKER_COLORS[6] }
-];
+const COLOR_OPTIONS = MARKER_COLOR_OPTIONS;
 
 const DEFAULT_SECURITY_STATE: OtpSecurityState = {
   protectionEnabled: false,
@@ -527,7 +520,7 @@ export function App({
                         setMenuEntryId(null);
                       }}
                     >
-                      Rename service
+                      Rename
                     </button>
                     <button
                       role="menuitem"
@@ -539,7 +532,7 @@ export function App({
                         setMenuEntryId(null);
                       }}
                     >
-                      Set color
+                      Change color
                     </button>
                     <button
                       role="menuitem"
@@ -551,7 +544,7 @@ export function App({
                         setMenuEntryId(null);
                       }}
                     >
-                      Delete entry
+                      Delete
                     </button>
                   </div>
                 ) : null}
@@ -572,8 +565,8 @@ export function App({
       {renameEntry ? (
         <div className="dialog-scrim">
           <section aria-labelledby="rename-dialog-title" aria-modal="true" className="entry-dialog" role="dialog">
-            <p className="dialog-eyebrow">Manage entry</p>
-            <h2 id="rename-dialog-title">Rename service</h2>
+            <p className="dialog-eyebrow">{renameEntry.serviceName}</p>
+            <h2 id="rename-dialog-title">Rename</h2>
             <form
               className="dialog-form"
               onSubmit={(event) => {
@@ -582,7 +575,7 @@ export function App({
               }}
             >
               <input
-                aria-label="Service name"
+                aria-label="Name"
                 autoFocus
                 className="dialog-input"
                 value={renameValue}
@@ -611,8 +604,8 @@ export function App({
       {deleteEntry ? (
         <div className="dialog-scrim">
           <section aria-labelledby="delete-dialog-title" aria-modal="true" className="entry-dialog" role="dialog">
-            <p className="dialog-eyebrow">Manage entry</p>
-            <h2 id="delete-dialog-title">Delete entry</h2>
+            <p className="dialog-eyebrow">{deleteEntry.serviceName}</p>
+            <h2 id="delete-dialog-title">Delete</h2>
             <p className="dialog-copy">
               Remove <strong>{deleteEntry.serviceName}</strong> from this browser?
             </p>
@@ -631,20 +624,18 @@ export function App({
       {colorEntry ? (
         <div className="dialog-scrim">
           <section aria-labelledby="color-dialog-title" aria-modal="true" className="entry-dialog" role="dialog">
-            <p className="dialog-eyebrow">Manage entry</p>
-            <h2 id="color-dialog-title">Set color</h2>
+            <p className="dialog-eyebrow">{colorEntry.serviceName}</p>
+            <h2 id="color-dialog-title">Change color</h2>
             <div className="color-grid">
               {COLOR_OPTIONS.map((option) => (
                 <button
                   key={option.value}
                   aria-label={option.label}
-                  className="icon-button"
-                  style={{ background: option.value, color: getMarkerTextColor(option.value) }}
+                  className="color-swatch"
+                  style={{ background: option.value }}
                   type="button"
                   onClick={() => void applyColor(colorEntry.id, option.value)}
-                >
-                  ●
-                </button>
+                />
               ))}
             </div>
             <div className="dialog-actions">

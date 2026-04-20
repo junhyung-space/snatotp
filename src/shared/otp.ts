@@ -1,16 +1,22 @@
 import * as OTPAuth from "otpauth";
 import type { OtpEntry, SourceType } from "./types";
 
-export const MARKER_COLORS = [
-  "#2f6fed",
-  "#0f766e",
-  "#c2410c",
-  "#7c3aed",
-  "#be123c",
-  "#2563eb",
-  "#15803d",
-  "#b45309"
-];
+export const MARKER_COLOR_OPTIONS = [
+  { label: "White", value: "#ffffff" },
+  { label: "Black", value: "#000000" },
+  { label: "Red", value: "#ef4444" },
+  { label: "Orange", value: "#f97316" },
+  { label: "Yellow", value: "#eab308" },
+  { label: "Green", value: "#22c55e" },
+  { label: "Teal", value: "#0f766e" },
+  { label: "Blue", value: "#3b82f6" },
+  { label: "Purple", value: "#8b5cf6" },
+  { label: "Pink", value: "#ec4899" },
+  { label: "Brown", value: "#8b5e3c" },
+  { label: "Slate", value: "#64748b" }
+] as const;
+
+export const MARKER_COLORS = MARKER_COLOR_OPTIONS.map((option) => option.value);
 
 function createStableId(secret: string, issuer: string, accountName: string) {
   return `${secret}:${issuer}:${accountName}`.toLowerCase();

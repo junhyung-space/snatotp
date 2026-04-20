@@ -334,9 +334,9 @@ describe("popup app", () => {
     render(<App copyText={writeText} repository={createRepository()} now={() => 0} />);
 
     await user.click(await screen.findByRole("button", { name: "Manage Example" }));
-    await user.click(screen.getByRole("menuitem", { name: "Rename service" }));
-    expect(screen.getByRole("dialog", { name: "Rename service" })).toBeInTheDocument();
-    const input = screen.getByRole("textbox", { name: "Service name" });
+    await user.click(screen.getByRole("menuitem", { name: "Rename" }));
+    expect(screen.getByRole("dialog", { name: "Rename" })).toBeInTheDocument();
+    const input = screen.getByRole("textbox", { name: "Name" });
     await user.clear(input);
     await user.type(input, "Renamed{enter}");
 
@@ -349,8 +349,8 @@ describe("popup app", () => {
     render(<App copyText={writeText} repository={createRepository()} now={() => 0} />);
 
     await user.click(await screen.findByRole("button", { name: "Manage Example" }));
-    await user.click(screen.getByRole("menuitem", { name: "Delete entry" }));
-    expect(screen.getByRole("dialog", { name: "Delete entry" })).toBeInTheDocument();
+    await user.click(screen.getByRole("menuitem", { name: "Delete" }));
+    expect(screen.getByRole("dialog", { name: "Delete" })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Delete" }));
 
     await waitFor(() => {
@@ -364,11 +364,11 @@ describe("popup app", () => {
     render(<App copyText={writeText} repository={createRepository()} now={() => 0} />);
 
     await user.click(await screen.findByRole("button", { name: "Manage Example" }));
-    expect(screen.getByRole("menuitem", { name: "Rename service" })).toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: "Rename" })).toBeInTheDocument();
 
     await user.click(screen.getByText("Snap OTP"));
 
-    expect(screen.queryByRole("menuitem", { name: "Rename service" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("menuitem", { name: "Rename" })).not.toBeInTheDocument();
   });
 
   it("changes the entry marker color from the manage menu", async () => {
@@ -378,13 +378,62 @@ describe("popup app", () => {
     render(<App copyText={writeText} repository={repository} now={() => 0} />);
 
     await user.click(await screen.findByRole("button", { name: "Manage Example" }));
-    await user.click(screen.getByRole("menuitem", { name: "Set color" }));
+    await user.click(screen.getByRole("menuitem", { name: "Change color" }));
     await user.click(screen.getByRole("button", { name: "Teal" }));
 
     await waitFor(() => {
       expect(repository.entries[0].markerColor).toBe("#0f766e");
     });
     expect(screen.getByLabelText("Example color marker")).toHaveStyle({ background: "#0f766e" });
+  });
+
+  it("shows the curated 12-color palette in order and allows selecting white", async () => {
+    const user = userEvent.setup();
+    const repository = createRepository();
+
+    render(<App copyText={writeText} repository={repository} now={() => 0} />);
+
+    await user.click(await screen.findByRole("button", { name: "Manage Example" }));
+    await user.click(screen.getByRole("menuitem", { name: "Change color" }));
+
+    const swatches = screen.getAllByRole("button").filter((button) =>
+      [
+        "White",
+        "Black",
+        "Red",
+        "Orange",
+        "Yellow",
+        "Green",
+        "Teal",
+        "Blue",
+        "Purple",
+        "Pink",
+        "Brown",
+        "Slate"
+      ].includes(button.getAttribute("aria-label") ?? "")
+    );
+
+    expect(swatches.map((button) => button.getAttribute("aria-label"))).toEqual([
+      "White",
+      "Black",
+      "Red",
+      "Orange",
+      "Yellow",
+      "Green",
+      "Teal",
+      "Blue",
+      "Purple",
+      "Pink",
+      "Brown",
+      "Slate"
+    ]);
+
+    await user.click(screen.getByRole("button", { name: "White" }));
+
+    await waitFor(() => {
+      expect(repository.entries[0].markerColor).toBe("#ffffff");
+    });
+    expect(screen.getByLabelText("Example color marker")).toHaveStyle({ background: "#ffffff" });
   });
 
   it("persists drag and drop entry order changes", async () => {
