@@ -668,7 +668,6 @@ export function App({
       {renameEntry ? (
         <div className="dialog-scrim">
           <section aria-labelledby="rename-dialog-title" aria-modal="true" className="entry-dialog" role="dialog">
-            <p className="dialog-eyebrow">{renameEntry.serviceName}</p>
             <h2 id="rename-dialog-title">Rename</h2>
             <form
               className="dialog-form"
@@ -708,7 +707,6 @@ export function App({
       {deleteEntry ? (
         <div className="dialog-scrim">
           <section aria-labelledby="delete-dialog-title" aria-modal="true" className="entry-dialog" role="dialog">
-            <p className="dialog-eyebrow">{deleteEntry.serviceName}</p>
             <h2 id="delete-dialog-title">Delete</h2>
             <p className="dialog-copy">
               Remove <strong>{deleteEntry.serviceName}</strong> from this browser?
@@ -730,7 +728,6 @@ export function App({
           <section aria-labelledby="color-dialog-title" aria-modal="true" className="entry-dialog" role="dialog">
             <div className="dialog-header">
               <div className="dialog-heading">
-                <p className="dialog-eyebrow">{colorEntry.serviceName}</p>
                 <h2 id="color-dialog-title">Change color</h2>
               </div>
               <button
@@ -761,10 +758,13 @@ export function App({
       {qrEntry && qrUri ? (
         <div className="dialog-scrim">
           <section aria-labelledby="qr-dialog-title" aria-modal="true" className="entry-dialog qr-dialog" role="dialog">
-            <div className="dialog-header">
-              <div className="dialog-heading">
-                <p className="dialog-eyebrow">{qrEntry.serviceName}</p>
-                <h2 id="qr-dialog-title">Use in another app</h2>
+            <div className="dialog-header qr-dialog-header">
+              <div className="dialog-heading qr-dialog-heading">
+                <h2 className="qr-dialog-title" id="qr-dialog-title">
+                  Use in another app
+                </h2>
+                <p className="qr-dialog-service">{qrEntry.serviceName}</p>
+                <p className="dialog-copy qr-dialog-account">{qrEntry.accountName}</p>
               </div>
               <button
                 aria-label="Close QR dialog"
@@ -778,7 +778,6 @@ export function App({
                 ×
               </button>
             </div>
-            <p className="dialog-copy">{qrEntry.accountName}</p>
             <button
               aria-label="Copy setup link from QR code"
               className="qr-code-button"

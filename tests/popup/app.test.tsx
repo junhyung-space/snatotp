@@ -345,7 +345,9 @@ describe("popup app", () => {
 
     await user.click(await screen.findByRole("button", { name: "More options for Example" }));
     await user.click(screen.getByRole("menuitem", { name: "Rename" }));
-    expect(screen.getByRole("dialog", { name: "Rename" })).toBeInTheDocument();
+    const dialog = screen.getByRole("dialog", { name: "Rename" });
+    expect(dialog).toBeInTheDocument();
+    expect(within(dialog).queryByText("Example", { selector: ".dialog-eyebrow" })).not.toBeInTheDocument();
     const input = screen.getByRole("textbox", { name: "Name" });
     await user.clear(input);
     await user.type(input, "Renamed{enter}");
@@ -383,7 +385,9 @@ describe("popup app", () => {
 
     await user.click(await screen.findByRole("button", { name: "More options for Example" }));
     await user.click(screen.getByRole("menuitem", { name: "Delete" }));
-    expect(screen.getByRole("dialog", { name: "Delete" })).toBeInTheDocument();
+    const dialog = screen.getByRole("dialog", { name: "Delete" });
+    expect(dialog).toBeInTheDocument();
+    expect(within(dialog).queryByText("Example", { selector: ".dialog-eyebrow" })).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Delete" }));
 
     await waitFor(() => {
@@ -432,6 +436,7 @@ describe("popup app", () => {
     const dialog = screen.getByRole("dialog", { name: "Change color" });
     expect(within(dialog).getByRole("button", { name: "Close color dialog" })).toBeInTheDocument();
     expect(within(dialog).queryByRole("button", { name: "Close" })).not.toBeInTheDocument();
+    expect(within(dialog).queryByText("Example", { selector: ".dialog-eyebrow" })).not.toBeInTheDocument();
 
     const swatches = screen.getAllByRole("button").filter((button) =>
       [
@@ -483,7 +488,9 @@ describe("popup app", () => {
 
     const dialog = screen.getByRole("dialog", { name: "Use in another app" });
     expect(dialog).toBeInTheDocument();
-    expect(within(dialog).getByText("alice@example.com")).toBeInTheDocument();
+    expect(within(dialog).getByRole("heading", { name: "Use in another app" })).toHaveClass("qr-dialog-title");
+    expect(within(dialog).getByText("Example")).toHaveClass("qr-dialog-service");
+    expect(within(dialog).getByText("alice@example.com")).toHaveClass("qr-dialog-account");
     expect(within(dialog).queryByText("Click the QR code to copy the code setup link")).not.toBeInTheDocument();
     expect(within(dialog).queryByText("Code setup link copied")).not.toBeInTheDocument();
     expect(within(dialog).getByRole("button", { name: "Close QR dialog" })).toBeInTheDocument();

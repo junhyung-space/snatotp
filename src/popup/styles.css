@@ -639,13 +639,42 @@ body {
 }
 
 .qr-dialog {
-  gap: 0;
-  padding-bottom: 14px;
+  gap: 10px;
+  padding-bottom: 15px;
+}
+
+.qr-dialog-header {
+  align-items: flex-start;
+}
+
+.qr-dialog-heading {
+  gap: 4px;
+}
+
+.qr-dialog-title {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.qr-dialog-service {
+  color: #132033;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.qr-dialog-account {
+  color: #6a7f99;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .qr-dialog .dialog-copy {
-  margin-top: 4px;
-  margin-bottom: 16px;
+  margin: 0;
 }
 
 .qr-code-button {
@@ -654,7 +683,7 @@ body {
   place-items: center;
   position: relative;
   padding: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 0;
   border: 0;
   border-radius: 20px;
   background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
