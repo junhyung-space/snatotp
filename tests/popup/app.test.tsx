@@ -429,6 +429,10 @@ describe("popup app", () => {
     await user.click(await screen.findByRole("button", { name: "More options for Example" }));
     await user.click(screen.getByRole("menuitem", { name: "Change color" }));
 
+    const dialog = screen.getByRole("dialog", { name: "Change color" });
+    expect(within(dialog).getByRole("button", { name: "Close color dialog" })).toBeInTheDocument();
+    expect(within(dialog).queryByRole("button", { name: "Close" })).not.toBeInTheDocument();
+
     const swatches = screen.getAllByRole("button").filter((button) =>
       [
         "White",

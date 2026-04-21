@@ -728,8 +728,20 @@ export function App({
       {colorEntry ? (
         <div className="dialog-scrim">
           <section aria-labelledby="color-dialog-title" aria-modal="true" className="entry-dialog" role="dialog">
-            <p className="dialog-eyebrow">{colorEntry.serviceName}</p>
-            <h2 id="color-dialog-title">Change color</h2>
+            <div className="dialog-header">
+              <div className="dialog-heading">
+                <p className="dialog-eyebrow">{colorEntry.serviceName}</p>
+                <h2 id="color-dialog-title">Change color</h2>
+              </div>
+              <button
+                aria-label="Close color dialog"
+                className="dialog-close-button"
+                type="button"
+                onClick={() => setColorEntryId(null)}
+              >
+                ×
+              </button>
+            </div>
             <div className="color-grid">
               {COLOR_OPTIONS.map((option) => (
                 <button
@@ -741,11 +753,6 @@ export function App({
                   onClick={() => void applyColor(colorEntry.id, option.value)}
                 />
               ))}
-            </div>
-            <div className="dialog-actions">
-              <button className="dialog-secondary" type="button" onClick={() => setColorEntryId(null)}>
-                Close
-              </button>
             </div>
           </section>
         </div>
