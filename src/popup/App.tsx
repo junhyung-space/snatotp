@@ -385,9 +385,9 @@ export function App({
 
         <section className="locked-panel">
           <p className="dialog-eyebrow">Protected</p>
-          <h2 className="locked-title">Unlock your OTP vault</h2>
+          <h2 className="locked-title">Unlock Snap OTP</h2>
           <p className="locked-copy">
-            Passphrase protection is enabled. Enter your passphrase to view and use saved OTP entries.
+            Your accounts are locked. Enter your password to continue.
           </p>
 
           <form
@@ -398,10 +398,10 @@ export function App({
             }}
           >
             <input
-              aria-label="Passphrase"
+              aria-label="Password"
               autoFocus
               className="dialog-input"
-              placeholder="Enter passphrase"
+              placeholder="Enter password"
               type="password"
               value={unlockPassphrase}
               onChange={(event) => {
@@ -421,7 +421,7 @@ export function App({
             </div>
           </form>
 
-          <p className="locked-footer">Snap OTP auto-locks again after 30 minutes.</p>
+          <p className="locked-footer">Snap OTP locks automatically after 30 minutes.</p>
         </section>
       </main>
     );
@@ -436,7 +436,7 @@ export function App({
         </div>
         <section aria-label="Actions" className="action-row">
           <button
-            aria-label="Capture screen region"
+            aria-label="Scan QR code from screen"
             className="icon-button"
             type="button"
             onClick={() => void handleCapture()}
@@ -454,11 +454,11 @@ export function App({
         </section>
       </header>
 
-      <section aria-label="OTP entries" className="entry-list">
+      <section aria-label="OTP accounts" className="entry-list">
         {entries.length === 0 ? (
           <div className="empty-state">
             <strong>Add your first account</strong>
-            <span>Import a QR code from Settings or capture one from the current page.</span>
+            <span>Add an account from Settings or scan a QR code on the current page.</span>
           </div>
         ) : (
           entries.map((entry) => {
@@ -504,7 +504,7 @@ export function App({
 
                   <button
                     aria-expanded={menuOpen}
-                    aria-label={`Manage ${entry.serviceName}`}
+                    aria-label={`More options for ${entry.serviceName}`}
                     className="menu-button"
                     data-entry-menu-surface="true"
                     type="button"

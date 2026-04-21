@@ -80,7 +80,7 @@ describe("capture flow", () => {
 
     render(<App closePopup={closePopup} startCapture={startCapture} repository={repo} now={() => 0} />);
 
-    await user.click(screen.getByRole("button", { name: "Capture screen region" }));
+    await user.click(screen.getByRole("button", { name: "Scan QR code from screen" }));
 
     expect(startCapture).toHaveBeenCalledTimes(1);
     expect(closePopup).toHaveBeenCalledTimes(1);

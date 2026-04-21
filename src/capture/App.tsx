@@ -102,7 +102,7 @@ export function CaptureApp({
       })
       .catch((error: unknown) => {
         if (active) {
-          setMessage(error instanceof Error ? error.message : "Capture session expired");
+          setMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
         }
       })
       .finally(() => {
@@ -143,7 +143,7 @@ export function CaptureApp({
       await clearSession(captureId);
       closeWindow();
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Capture failed");
+      setMessage(error instanceof Error ? error.message : "Failed to add account. Please try again.");
       setBusy(false);
     }
   }
@@ -156,16 +156,16 @@ export function CaptureApp({
   return (
     <main className="capture-shell">
       <header className="capture-header">
-        <p className="capture-eyebrow">Authenticator</p>
+        <p className="capture-eyebrow">Add account</p>
         <div className="capture-heading">
-          <h1>Select the QR</h1>
-          <p>Drag over the QR region, then add the OTP directly to Snap OTP.</p>
+          <h1>Select the QR code</h1>
+          <p>Drag to select the QR code on the page, then add the account.</p>
         </div>
       </header>
 
       <section className="capture-stage-panel">
         {loading ? (
-          <div className="capture-placeholder">Preparing capture...</div>
+          <div className="capture-placeholder">Loading...</div>
         ) : session ? (
           <div
             ref={stageRef}
@@ -244,14 +244,14 @@ export function CaptureApp({
             ) : null}
           </div>
         ) : (
-          <div className="capture-placeholder">Capture session expired.</div>
+          <div className="capture-placeholder">Something went wrong. Please try again.</div>
         )}
       </section>
 
       <footer className="capture-footer">
         <div className="capture-meta">
-          <strong>{selection ? "Selection ready" : "Select a QR region"}</strong>
-          <span>{message ?? "This stays inside the extension flow and works the same across OSes."}</span>
+          <strong>{selection ? "Ready to add" : "Drag to select the QR code"}</strong>
+          <span>{message ?? "Works on all browsers and operating systems."}</span>
         </div>
         <div className="capture-actions">
           <button className="capture-secondary" type="button" onClick={() => void handleCancel()}>
@@ -263,7 +263,7 @@ export function CaptureApp({
             disabled={!selection || busy || !session}
             onClick={() => void handleSubmit()}
           >
-            {busy ? "Adding..." : "Add OTP"}
+            {busy ? "Adding..." : "Add account"}
           </button>
         </div>
       </footer>

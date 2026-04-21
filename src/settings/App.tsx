@@ -106,13 +106,13 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
   const [securityState, setSecurityState] = useState<OtpSecurityState>(DEFAULT_SECURITY_STATE);
   const [entryCount, setEntryCount] = useState(0);
   const [message, setMessage] = useState<FeedbackMessage | null>(null);
-  const [unlockPassphrase, setUnlockPassphrase] = useState("");
+  const [unlockPassword, setUnlockPassword] = useState("");
   const [securityBusy, setSecurityBusy] = useState(false);
   const [securityMessage, setSecurityMessage] = useState<FeedbackMessage | null>(null);
   const [securityFormMode, setSecurityFormMode] = useState<SecurityFormMode>(null);
-  const [currentPassphrase, setCurrentPassphrase] = useState("");
-  const [nextPassphrase, setNextPassphrase] = useState("");
-  const [confirmPassphrase, setConfirmPassphrase] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [nextPassword, setNextPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [deleteAllDialogOpen, setDeleteAllDialogOpen] = useState(false);
 
   const version = useMemo(() => getManifestVersion(), []);
@@ -147,9 +147,9 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
 
   function resetSecurityForm() {
     setSecurityFormMode(null);
-    setCurrentPassphrase("");
-    setNextPassphrase("");
-    setConfirmPassphrase("");
+    setCurrentPassword("");
+    setNextPassword("");
+    setConfirmPassword("");
     setSecurityMessage(null);
     setSecurityBusy(false);
   }
@@ -172,9 +172,9 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
     setSecurityMessage(null);
 
     try {
-      const nextState = await repository.unlock(unlockPassphrase);
+      const nextState = await repository.unlock(unlockPassword);
       setSecurityState(nextState);
-      setUnlockPassphrase("");
+      setUnlockPassword("");
       setPreferences(await preferencesRepository.get());
 
       if (nextState.protectionEnabled && nextState.locked) {
@@ -194,13 +194,13 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
       return;
     }
 
-    if (!nextPassphrase) {
-      setSecurityMessage(createErrorMessage(new Error("Enter a passphrase"), "Protection not enabled"));
+    if (!nextPassword) {
+      setSecurityMessage(createErrorMessage(new Error("Enter a password"), "Protection not enabled"));
       return;
     }
 
-    if (nextPassphrase !== confirmPassphrase) {
-      setSecurityMessage(createErrorMessage(new Error("Passphrases do not match"), "Protection not enabled"));
+    if (nextPassword !== confirmPassword) {
+      setSecurityMessage(createErrorMessage(new Error("Passwords do not match"), "Protection not enabled"));
       return;
     }
 
@@ -208,12 +208,12 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
     setSecurityMessage(null);
 
     try {
-      const nextState = await repository.enableProtection(nextPassphrase);
+      const nextState = await repository.enableProtection(nextPassword);
       setSecurityState(nextState);
       setEntryCount(0);
       setMessage({
         kind: "warning",
-        text: "Passphrase protection enabled"
+        text: "Password protection enabled"
       });
       resetSecurityForm();
     } catch (error) {
@@ -223,18 +223,18 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
     }
   }
 
-  async function submitChangePassphrase() {
+  async function submitChangePassword() {
     if (securityBusy) {
       return;
     }
 
-    if (!currentPassphrase || !nextPassphrase) {
-      setSecurityMessage(createErrorMessage(new Error("Enter both current and new passphrases"), "Passphrase not changed"));
+    if (!currentPassword || !nextPassword) {
+      setSecurityMessage(createErrorMessage(new Error("Enter both current and new passwords"), "Password not changed"));
       return;
     }
 
-    if (nextPassphrase !== confirmPassphrase) {
-      setSecurityMessage(createErrorMessage(new Error("Passphrases do not match"), "Passphrase not changed"));
+    if (nextPassword !== confirmPassword) {
+      setSecurityMessage(createErrorMessage(new Error("Passwords do not match"), "Password not changed"));
       return;
     }
 
@@ -242,15 +242,15 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
     setSecurityMessage(null);
 
     try {
-      await repository.changePassphrase(currentPassphrase, nextPassphrase);
+      await repository.changePassword(currentPassword, nextPassword);
       await refreshState();
       resetSecurityForm();
       setMessage({
         kind: "success",
-        text: "Passphrase updated"
+        text: "Password updated"
       });
     } catch (error) {
-      setSecurityMessage(createErrorMessage(error, "Passphrase not changed"));
+      setSecurityMessage(createErrorMessage(error, "Password not changed"));
     } finally {
       setSecurityBusy(false);
     }
@@ -261,8 +261,8 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
       return;
     }
 
-    if (!currentPassphrase) {
-      setSecurityMessage(createErrorMessage(new Error("Enter your current passphrase"), "Protection not removed"));
+    if (!currentPassword) {
+      setSecurityMessage(createErrorMessage(new Error("Enter your current password"), "Protection not removed"));
       return;
     }
 
@@ -270,12 +270,12 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
     setSecurityMessage(null);
 
     try {
-      await repository.disableProtection(currentPassphrase);
+      await repository.disableProtection(currentPassword);
       await refreshState();
       resetSecurityForm();
       setMessage({
         kind: "warning",
-        text: "Passphrase protection removed"
+        text: "Password protection removed"
       });
     } catch (error) {
       setSecurityMessage(createErrorMessage(error, "Protection not removed"));
@@ -377,9 +377,9 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
       <main className="settings-shell settings-locked-shell">
         <section className="settings-locked-panel">
           <p className="settings-kicker">Protected</p>
-          <h1>Unlock your OTP vault</h1>
+          <h1>Unlock Snap OTP</h1>
           <p className="settings-copy">
-            Passphrase protection is enabled. Unlock Snap OTP before using import, backup, or protection settings.
+            Your accounts are locked. Enter your password to continue.
           </p>
 
           <form
@@ -390,14 +390,14 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
             }}
           >
             <label className="settings-field">
-              <span>Passphrase</span>
+              <span>Password</span>
               <input
-                aria-label="Passphrase"
+                aria-label="Password"
                 autoFocus
                 type="password"
-                value={unlockPassphrase}
+                value={unlockPassword}
                 onChange={(event) => {
-                  setUnlockPassphrase(event.currentTarget.value);
+                  setUnlockPassword(event.currentTarget.value);
                   setSecurityMessage(null);
                 }}
               />
@@ -464,7 +464,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
 
             <ul aria-label="General settings" className="settings-list">
               <SettingsRow
-                title="Chrome sync storage"
+                title="Saved accounts"
                 description={`${entryCount} ${entryCount === 1 ? "account saved" : "accounts saved"}`}
                 trailing={
                   <span className="settings-status-pill">
@@ -494,7 +494,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
               />
 
               <SettingsRow
-                title="Popup density"
+                title="Card size"
                 description="Control how much information fits inside the extension popup."
                 actions={
                   <div className="settings-segmented-row">
@@ -514,7 +514,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
               />
 
               <SettingsRow
-                title="Delete all entries"
+                title="Delete all accounts"
                 description="Delete all saved accounts from this browser profile."
                 tone="danger"
                 actions={
@@ -523,7 +523,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
                     type="button"
                     onClick={() => setDeleteAllDialogOpen(true)}
                   >
-                    Delete all entries
+                    Delete all accounts
                   </button>
                 }
               />
@@ -535,7 +535,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
           <section className="settings-section">
             <header className="settings-section-header">
               <h2>Import</h2>
-              <p>Add accounts from QR images or otpauth:// links.</p>
+              <p>Add accounts from QR images or authentication links.</p>
             </header>
             <ImportSection repository={repository} onImportSaved={() => refreshState()} />
           </section>
@@ -545,16 +545,16 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
           <section className="settings-section">
             <header className="settings-section-header">
               <h2>Protection</h2>
-              <p>Add an optional passphrase to encrypt saved accounts and lock Snap OTP until you unlock it.</p>
+              <p>Add a password to protect your accounts and keep them locked when Snap OTP is closed.</p>
             </header>
 
             <ul aria-label="Protection settings" className="settings-list">
               <SettingsRow
-                title="Passphrase protection"
-                description="Optional passphrase protection encrypts saved OTP data. Removing it restores standard Chrome sync storage behavior."
+                title="Password protection"
+                description="Protects your saved accounts with a password. Removing protection disables the lock screen."
                 trailing={
                   <span className={securityState.protectionEnabled ? "settings-status-pill protected" : "settings-status-pill"}>
-                    {securityState.protectionEnabled ? "Protected" : "Standard mode"}
+                    {securityState.protectionEnabled ? "Protected" : "Not protected"}
                   </span>
                 }
               />
@@ -562,10 +562,10 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
               {securityFormMode === null && !securityState.protectionEnabled ? (
                 <SettingsRow
                   title="Enable protection"
-                  description="Turn on passphrase protection for all saved OTP entries."
+                  description="Add a password to protect all saved accounts."
                   actions={
                     <button className="settings-primary-button" type="button" onClick={() => setSecurityFormMode("set")}>
-                      Set passphrase
+                      Set password
                     </button>
                   }
                 />
@@ -574,29 +574,29 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
               {securityFormMode === null && securityState.protectionEnabled ? (
                 <>
                   <SettingsRow
-                    title="Change passphrase"
-                    description="Re-encrypt saved entries with a new passphrase."
+                    title="Change password"
+                    description="Update your protection password."
                     actions={
                       <button className="settings-secondary-button" type="button" onClick={() => setSecurityFormMode("change")}>
-                        Change passphrase
+                        Change password
                       </button>
                     }
                   />
 
                   <SettingsRow
-                    title="Remove passphrase"
-                    description="Return to standard Chrome sync storage behavior."
+                    title="Remove password"
+                    description="Remove password protection from your accounts."
                     tone="danger"
                     actions={
                       <button className="settings-danger-button" type="button" onClick={() => setSecurityFormMode("remove")}>
-                        Remove passphrase
+                        Remove password
                       </button>
                     }
                   />
 
                   <SettingsRow
                     title="Lock now"
-                    description="Clear the current unlocked session immediately."
+                    description="Lock your accounts now without waiting."
                     actions={
                       <button className="settings-warning-button" type="button" onClick={() => void handleLockNow()}>
                         Lock now
@@ -611,15 +611,15 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
               <div className="settings-form-panel">
             {securityFormMode === "set" ? (
               <article className="settings-form-card">
-                <h3>Set passphrase</h3>
+                <h3>Set password</h3>
                 <div className="settings-form-grid">
                   <label className="settings-field">
-                    <span>New passphrase</span>
-                    <input type="password" value={nextPassphrase} onChange={(event) => setNextPassphrase(event.currentTarget.value)} />
+                    <span>New password</span>
+                    <input type="password" value={nextPassword} onChange={(event) => setNextPassword(event.currentTarget.value)} />
                   </label>
                   <label className="settings-field">
-                    <span>Confirm new passphrase</span>
-                    <input type="password" value={confirmPassphrase} onChange={(event) => setConfirmPassphrase(event.currentTarget.value)} />
+                    <span>Confirm new password</span>
+                    <input type="password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.currentTarget.value)} />
                   </label>
                 </div>
                 {securityMessage ? (
@@ -640,19 +640,19 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
 
             {securityFormMode === "change" ? (
               <article className="settings-form-card">
-                <h3>Change passphrase</h3>
+                <h3>Change password</h3>
                 <div className="settings-form-grid">
                   <label className="settings-field">
-                    <span>Current passphrase</span>
-                    <input type="password" value={currentPassphrase} onChange={(event) => setCurrentPassphrase(event.currentTarget.value)} />
+                    <span>Current password</span>
+                    <input type="password" value={currentPassword} onChange={(event) => setCurrentPassword(event.currentTarget.value)} />
                   </label>
                   <label className="settings-field">
-                    <span>New passphrase</span>
-                    <input type="password" value={nextPassphrase} onChange={(event) => setNextPassphrase(event.currentTarget.value)} />
+                    <span>New password</span>
+                    <input type="password" value={nextPassword} onChange={(event) => setNextPassword(event.currentTarget.value)} />
                   </label>
                   <label className="settings-field">
-                    <span>Confirm new passphrase</span>
-                    <input type="password" value={confirmPassphrase} onChange={(event) => setConfirmPassphrase(event.currentTarget.value)} />
+                    <span>Confirm new password</span>
+                    <input type="password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.currentTarget.value)} />
                   </label>
                 </div>
                 {securityMessage ? (
@@ -664,8 +664,8 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
                   <button className="settings-secondary-button" type="button" onClick={() => resetSecurityForm()}>
                     Cancel
                   </button>
-                  <button className="settings-primary-button" disabled={securityBusy} type="button" onClick={() => void submitChangePassphrase()}>
-                    {securityBusy ? "Updating…" : "Update passphrase"}
+                  <button className="settings-primary-button" disabled={securityBusy} type="button" onClick={() => void submitChangePassword()}>
+                    {securityBusy ? "Updating…" : "Update password"}
                   </button>
                 </div>
               </article>
@@ -673,11 +673,11 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
 
             {securityFormMode === "remove" ? (
               <article className="settings-form-card settings-form-card-danger">
-                <h3>Remove passphrase</h3>
+                <h3>Remove password</h3>
                 <div className="settings-form-grid">
                   <label className="settings-field">
-                    <span>Current passphrase</span>
-                    <input type="password" value={currentPassphrase} onChange={(event) => setCurrentPassphrase(event.currentTarget.value)} />
+                    <span>Current password</span>
+                    <input type="password" value={currentPassword} onChange={(event) => setCurrentPassword(event.currentTarget.value)} />
                   </label>
                 </div>
                 {securityMessage ? (
@@ -690,7 +690,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
                     Cancel
                   </button>
                   <button className="settings-danger-button" disabled={securityBusy} type="button" onClick={() => void submitDisableProtection()}>
-                    {securityBusy ? "Removing…" : "Remove passphrase"}
+                    {securityBusy ? "Removing…" : "Remove password"}
                   </button>
                 </div>
               </article>
@@ -720,7 +720,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
 
               <SettingsRow
                 title="Restore backup"
-                description="Merge a backup file into the current profile. Existing duplicates are skipped."
+                description="Add accounts from a backup file. Duplicate accounts are skipped."
                 actions={
                   <>
                     <button className="settings-secondary-button" type="button" onClick={() => restoreInputRef.current?.click()}>
@@ -777,10 +777,10 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
           role="dialog"
         >
           <section className="settings-dialog">
-            <p className="settings-kicker">Delete entries</p>
-            <h2 id="delete-all-entries-title">Delete all entries</h2>
+            <p className="settings-kicker">Delete accounts</p>
+            <h2 id="delete-all-entries-title">Delete all accounts</h2>
             <p className="settings-copy">
-              This removes every saved OTP entry from this browser profile. Passphrase protection settings stay as-is, but the saved accounts and secrets will be deleted.
+              This removes every saved account from this browser profile. Password protection settings stay as-is, but the saved accounts and secrets will be deleted.
             </p>
 
             <div className="settings-button-row">
@@ -796,7 +796,7 @@ export function SettingsApp({ repository, preferencesRepository, initialSection 
                 type="button"
                 onClick={() => void handleDeleteAllEntries()}
               >
-                Delete all entries permanently
+                Delete all accounts permanently
               </button>
             </div>
           </section>

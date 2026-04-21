@@ -76,7 +76,7 @@ describe("capture failure handling", () => {
       />
     );
 
-    await user.click(screen.getByRole("button", { name: "Capture screen region" }));
+    await user.click(screen.getByRole("button", { name: "Scan QR code from screen" }));
 
     expect(closePopup).not.toHaveBeenCalled();
     expect(await screen.findByText("Capture unavailable on this tab")).toBeInTheDocument();

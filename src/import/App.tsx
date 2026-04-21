@@ -27,11 +27,11 @@ async function saveOtpUri(repository: OtpRepository, otpUri: string, sourceType:
   const trimmedOtpUri = otpUri.trim();
 
   if (!trimmedOtpUri) {
-    throw new Error("Paste an otpauth:// link first");
+    throw new Error("Paste an authentication link first");
   }
 
   if (!trimmedOtpUri.toLowerCase().startsWith("otpauth://")) {
-    throw new Error("Paste a valid otpauth:// link");
+    throw new Error("Paste a valid authentication link");
   }
 
   const entry = parseOtpUri(trimmedOtpUri, sourceType);
@@ -122,10 +122,10 @@ export function ImportSection({
       <p className="import-eyebrow">Import</p>
       <h2>Add account</h2>
       <p className="import-copy">
-        Upload a QR image or paste an otpauth:// link to add an account without leaving Settings.
+        Upload a QR image or paste an authentication link to add an account without leaving Settings.
       </p>
 
-      <div aria-label="Registration method" className="import-tabs" role="tablist">
+      <div aria-label="How to add an account" className="import-tabs" role="tablist">
         <button
           aria-controls="upload-panel"
           aria-selected={activeMode === "upload"}
@@ -148,7 +148,7 @@ export function ImportSection({
           disabled={busy}
           onClick={() => selectMode("url")}
         >
-          URL
+          Link
         </button>
       </div>
 
@@ -180,7 +180,7 @@ export function ImportSection({
                 }
               }}
             >
-              <strong>{busy ? "Reading QR image..." : "Drop QR image here"}</strong>
+              <strong>{busy ? "Scanning QR code..." : "Drop QR image here"}</strong>
               <span className="import-dropzone-subtitle">or click to browse files</span>
               <span>PNG, JPG, or any screenshot containing an OTP QR code</span>
             </button>
@@ -206,13 +206,13 @@ export function ImportSection({
               }}
             >
               <label className="url-label" htmlFor="otp-url-input">
-                otpauth link
+                Authentication link
               </label>
               <textarea
-                aria-label="otpauth link"
+                aria-label="Authentication link"
                 className="url-input"
                 id="otp-url-input"
-                placeholder="otpauth://totp/Example:user@example.com?secret=..."
+                placeholder="Paste your authentication link here"
                 value={otpUrl}
                 disabled={busy}
                 onChange={(event) => {

@@ -239,7 +239,7 @@ describe("popup app", () => {
       />
     );
 
-    expect(screen.getByLabelText("Capture screen region")).toBeInTheDocument();
+    expect(screen.getByLabelText("Scan QR code from screen")).toBeInTheDocument();
     expect(screen.getByLabelText("Settings")).toBeInTheDocument();
     expect(screen.queryByText("Cap")).not.toBeInTheDocument();
     expect(screen.queryByText("Set")).not.toBeInTheDocument();
@@ -314,7 +314,7 @@ describe("popup app", () => {
     );
 
     expect(await screen.findByText("Add your first account")).toBeInTheDocument();
-    expect(screen.getByText("Import a QR code from Settings or capture one from the current page.")).toBeInTheDocument();
+    expect(screen.getByText("Add an account from Settings or scan a QR code on the current page.")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Capture QR" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Open Settings" })).not.toBeInTheDocument();
   });
@@ -343,7 +343,7 @@ describe("popup app", () => {
 
     render(<App copyText={writeText} repository={createRepository()} now={() => 0} />);
 
-    await user.click(await screen.findByRole("button", { name: "Manage Example" }));
+    await user.click(await screen.findByRole("button", { name: "More options for Example" }));
     await user.click(screen.getByRole("menuitem", { name: "Rename" }));
     expect(screen.getByRole("dialog", { name: "Rename" })).toBeInTheDocument();
     const input = screen.getByRole("textbox", { name: "Name" });
@@ -360,7 +360,7 @@ describe("popup app", () => {
 
     render(<App copyText={writeText} repository={repository} now={() => 0} />);
 
-    await user.click(await screen.findByRole("button", { name: "Manage Example" }));
+    await user.click(await screen.findByRole("button", { name: "More options for Example" }));
     await user.click(screen.getByRole("menuitem", { name: "Rename" }));
 
     const input = screen.getByRole("textbox", { name: "Name" });
@@ -381,7 +381,7 @@ describe("popup app", () => {
 
     render(<App copyText={writeText} repository={createRepository()} now={() => 0} />);
 
-    await user.click(await screen.findByRole("button", { name: "Manage Example" }));
+    await user.click(await screen.findByRole("button", { name: "More options for Example" }));
     await user.click(screen.getByRole("menuitem", { name: "Delete" }));
     expect(screen.getByRole("dialog", { name: "Delete" })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Delete" }));
@@ -396,7 +396,7 @@ describe("popup app", () => {
 
     render(<App copyText={writeText} repository={createRepository()} now={() => 0} />);
 
-    await user.click(await screen.findByRole("button", { name: "Manage Example" }));
+    await user.click(await screen.findByRole("button", { name: "More options for Example" }));
     expect(screen.getByRole("menuitem", { name: "Rename" })).toBeInTheDocument();
 
     await user.click(screen.getByText("Snap OTP"));
@@ -410,7 +410,7 @@ describe("popup app", () => {
 
     render(<App copyText={writeText} repository={repository} now={() => 0} />);
 
-    await user.click(await screen.findByRole("button", { name: "Manage Example" }));
+    await user.click(await screen.findByRole("button", { name: "More options for Example" }));
     await user.click(screen.getByRole("menuitem", { name: "Change color" }));
     await user.click(screen.getByRole("button", { name: "Teal" }));
 
@@ -426,7 +426,7 @@ describe("popup app", () => {
 
     render(<App copyText={writeText} repository={repository} now={() => 0} />);
 
-    await user.click(await screen.findByRole("button", { name: "Manage Example" }));
+    await user.click(await screen.findByRole("button", { name: "More options for Example" }));
     await user.click(screen.getByRole("menuitem", { name: "Change color" }));
 
     const swatches = screen.getAllByRole("button").filter((button) =>
@@ -543,10 +543,10 @@ describe("popup app", () => {
 
     render(<App copyText={writeText} repository={repository} now={() => 0} />);
 
-    expect(await screen.findByText("Unlock your OTP vault")).toBeInTheDocument();
+    expect(await screen.findByText("Unlock Snap OTP")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Example alice@example.com/i })).not.toBeInTheDocument();
 
-    await userEvent.type(screen.getByLabelText("Passphrase"), "secret passphrase");
+    await userEvent.type(screen.getByLabelText("Password"), "secret passphrase");
     await userEvent.click(screen.getByRole("button", { name: "Unlock" }));
 
     await waitFor(() => {

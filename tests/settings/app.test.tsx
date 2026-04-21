@@ -113,22 +113,22 @@ describe("settings app", () => {
 
     expect(await screen.findByRole("navigation", { name: "Settings sections" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "General" })).toBeInTheDocument();
-    expect(screen.getByText("Chrome sync storage")).toBeInTheDocument();
+    expect(screen.getByText("Saved accounts")).toBeInTheDocument();
     expect(screen.getByRole("list", { name: "General settings" })).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Import" }));
 
     expect(screen.getByRole("heading", { name: "Import" })).toBeInTheDocument();
-    expect(screen.getByText("Add accounts from QR images or otpauth:// links.")).toBeInTheDocument();
+    expect(screen.getByText("Add accounts from QR images or authentication links.")).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: "Upload" })).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Protection" }));
 
     expect(screen.getByRole("heading", { name: "Protection" })).toBeInTheDocument();
     expect(
-      screen.getByText("Add an optional passphrase to encrypt saved accounts and lock Snap OTP until you unlock it.")
+      screen.getByText("Add a password to protect your accounts and keep them locked when Snap OTP is closed.")
     ).toBeInTheDocument();
-    expect(screen.getAllByText("Passphrase protection").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Password protection").length).toBeGreaterThan(0);
     expect(screen.getByRole("list", { name: "Protection settings" })).toBeInTheDocument();
   });
 
@@ -156,10 +156,10 @@ describe("settings app", () => {
       />
     );
 
-    expect(await screen.findByText("Unlock your OTP vault")).toBeInTheDocument();
+    expect(await screen.findByText("Unlock Snap OTP")).toBeInTheDocument();
     expect(screen.queryByRole("navigation", { name: "Settings sections" })).not.toBeInTheDocument();
 
-    await user.type(screen.getByLabelText("Passphrase"), "secret passphrase");
+    await user.type(screen.getByLabelText("Password"), "secret passphrase");
     await user.click(screen.getByRole("button", { name: "Unlock" }));
 
     await waitFor(() => {
@@ -181,18 +181,18 @@ describe("settings app", () => {
       />
     );
 
-    await user.click(await screen.findByRole("button", { name: "Delete all entries" }));
+    await user.click(await screen.findByRole("button", { name: "Delete all accounts" }));
 
-    expect(screen.getByRole("dialog", { name: "Delete all entries" })).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Delete all accounts" })).toBeInTheDocument();
     expect(deleteAll).not.toHaveBeenCalled();
 
     await user.click(screen.getByRole("button", { name: "Cancel" }));
 
-    expect(screen.queryByRole("dialog", { name: "Delete all entries" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("dialog", { name: "Delete all accounts" })).not.toBeInTheDocument();
     expect(deleteAll).not.toHaveBeenCalled();
 
-    await user.click(screen.getByRole("button", { name: "Delete all entries" }));
-    await user.click(screen.getByRole("button", { name: "Delete all entries permanently" }));
+    await user.click(screen.getByRole("button", { name: "Delete all accounts" }));
+    await user.click(screen.getByRole("button", { name: "Delete all accounts permanently" }));
 
     await waitFor(() => {
       expect(deleteAll).toHaveBeenCalledTimes(1);
