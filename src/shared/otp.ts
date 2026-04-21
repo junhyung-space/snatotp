@@ -72,6 +72,19 @@ export function generateOtpCode(entry: OtpEntry, now: number) {
   return totp.generate({ timestamp: now });
 }
 
+export function serializeOtpUri(entry: OtpEntry) {
+  const totp = new OTPAuth.TOTP({
+    issuer: entry.issuer,
+    label: entry.accountName,
+    algorithm: entry.algorithm as OTPAuth.Algorithm,
+    digits: entry.digits,
+    period: entry.period,
+    secret: entry.secret
+  });
+
+  return OTPAuth.URI.stringify(totp);
+}
+
 export function formatOtpCode(code: string) {
   const mid = Math.ceil(code.length / 2);
   return `${code.slice(0, mid)} ${code.slice(mid)}`;

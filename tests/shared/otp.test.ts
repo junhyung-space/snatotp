@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateOtpCode, getSecondsRemaining, parseOtpUri } from "../../src/shared/otp";
+import { generateOtpCode, getSecondsRemaining, parseOtpUri, serializeOtpUri } from "../../src/shared/otp";
 
 describe("otp helpers", () => {
   it("parses a standard otpauth URI and derives visible fields", () => {
@@ -24,5 +24,16 @@ describe("otp helpers", () => {
     expect(generateOtpCode(entry, 0)).toBe("282760");
     expect(getSecondsRemaining(entry, 29_000)).toBe(1);
     expect(getSecondsRemaining(entry, 30_000)).toBe(30);
+  });
+
+  it("serializes a stored entry back into an otpauth URI", () => {
+    const entry = parseOtpUri(
+      "otpauth://totp/Example:alice@example.com?secret=JBSWY3DPEHPK3PXP&issuer=Example",
+      "upload"
+    );
+
+    expect(serializeOtpUri(entry)).toBe(
+      "otpauth://totp/Example:alice%40example.com?issuer=Example&secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&period=30"
+    );
   });
 });

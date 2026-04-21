@@ -1,7 +1,14 @@
 import { type CSSProperties, useEffect, useMemo, useState } from "react";
+import QRCode from "qrcode";
 import { START_CAPTURE_FLOW_MESSAGE } from "../background/messages";
 import { createErrorMessage, type FeedbackMessage } from "../shared/feedback";
-import { formatOtpCode, generateOtpCode, getSecondsRemaining, MARKER_COLOR_OPTIONS } from "../shared/otp";
+import {
+  formatOtpCode,
+  generateOtpCode,
+  getSecondsRemaining,
+  MARKER_COLOR_OPTIONS,
+  serializeOtpUri
+} from "../shared/otp";
 import {
   createChromeAppPreferencesRepository,
   DEFAULT_APP_PREFERENCES,
@@ -187,6 +194,9 @@ export function App({
   const [renameValue, setRenameValue] = useState("");
   const [deleteEntryId, setDeleteEntryId] = useState<string | null>(null);
   const [colorEntryId, setColorEntryId] = useState<string | null>(null);
+  const [qrEntryId, setQrEntryId] = useState<string | null>(null);
+  const [qrCodeMarkup, setQrCodeMarkup] = useState<string | null>(null);
+  const [qrCopied, setQrCopied] = useState(false);
   const [draggedEntryId, setDraggedEntryId] = useState<string | null>(null);
   const [dragOverEntryId, setDragOverEntryId] = useState<string | null>(null);
   const [preferences, setPreferences] = useState<AppPreferences>(DEFAULT_APP_PREFERENCES);
@@ -201,6 +211,8 @@ export function App({
   const renameEntry = entries.find((entry) => entry.id === renameEntryId) ?? null;
   const deleteEntry = entries.find((entry) => entry.id === deleteEntryId) ?? null;
   const colorEntry = entries.find((entry) => entry.id === colorEntryId) ?? null;
+  const qrEntry = entries.find((entry) => entry.id === qrEntryId) ?? null;
+  const qrUri = qrEntry ? serializeOtpUri(qrEntry) : null;
 
   async function refreshAppState() {
     const [nextSecurityState, loadedEntries] = await Promise.all([
@@ -263,6 +275,42 @@ export function App({
     const timer = window.setTimeout(() => setMessage(null), 3500);
     return () => window.clearTimeout(timer);
   }, [message]);
+
+  useEffect(() => {
+    if (!qrUri) {
+      setQrCodeMarkup(null);
+      setQrCopied(false);
+      return undefined;
+    }
+
+    let active = true;
+
+    void QRCode.toString(qrUri, {
+      type: "svg",
+      errorCorrectionLevel: "M",
+      margin: 1,
+      width: 160,
+      color: {
+        dark: "#132033",
+        light: "#ffffff"
+      }
+    })
+      .then((markup) => {
+        if (active) {
+          setQrCodeMarkup(markup);
+        }
+      })
+      .catch((error) => {
+        if (active) {
+          setQrCodeMarkup(null);
+          setMessage(createErrorMessage(error, "Could not create QR code"));
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [qrUri]);
 
   async function handleCopy(entry: OtpEntry) {
     const code = generateOtpCode(entry, timestamp);
@@ -327,6 +375,15 @@ export function App({
     await refreshAppState();
     setColorEntryId(null);
     setMenuEntryId(null);
+  }
+
+  async function handleCopyOtpUri(uri: string) {
+    await copyText(uri);
+    setQrCopied(true);
+
+    window.setTimeout(() => {
+      setQrCopied(false);
+    }, 1800);
   }
 
   async function reorderEntries(draggedId: string | null, targetId: string) {
@@ -513,6 +570,8 @@ export function App({
                       setDeleteEntryId(null);
                       setRenameEntryId(null);
                       setColorEntryId(null);
+                      setQrEntryId(null);
+                      setQrCopied(false);
                     }}
                   >
                     ⋮
@@ -543,6 +602,8 @@ export function App({
                         setRenameEntryId(entry.id);
                         setRenameValue(entry.serviceName);
                         setDeleteEntryId(null);
+                        setColorEntryId(null);
+                        setQrEntryId(null);
                         setMenuEntryId(null);
                       }}
                     >
@@ -555,6 +616,7 @@ export function App({
                         setColorEntryId(entry.id);
                         setDeleteEntryId(null);
                         setRenameEntryId(null);
+                        setQrEntryId(null);
                         setMenuEntryId(null);
                       }}
                     >
@@ -564,9 +626,24 @@ export function App({
                       role="menuitem"
                       type="button"
                       onClick={() => {
+                        setQrEntryId(entry.id);
+                        setDeleteEntryId(null);
+                        setRenameEntryId(null);
+                        setColorEntryId(null);
+                        setQrCopied(false);
+                        setMenuEntryId(null);
+                      }}
+                    >
+                      Show QR code
+                    </button>
+                    <button
+                      role="menuitem"
+                      type="button"
+                      onClick={() => {
                         setDeleteEntryId(entry.id);
                         setRenameEntryId(null);
                         setColorEntryId(null);
+                        setQrEntryId(null);
                         setMenuEntryId(null);
                       }}
                     >
@@ -670,6 +747,48 @@ export function App({
                 Close
               </button>
             </div>
+          </section>
+        </div>
+      ) : null}
+
+      {qrEntry && qrUri ? (
+        <div className="dialog-scrim">
+          <section aria-labelledby="qr-dialog-title" aria-modal="true" className="entry-dialog qr-dialog" role="dialog">
+            <div className="dialog-header">
+              <div className="dialog-heading">
+                <p className="dialog-eyebrow">{qrEntry.serviceName}</p>
+                <h2 id="qr-dialog-title">Use in another app</h2>
+              </div>
+              <button
+                aria-label="Close QR dialog"
+                className="dialog-close-button"
+                type="button"
+                onClick={() => {
+                  setQrEntryId(null);
+                  setQrCopied(false);
+                }}
+              >
+                ×
+              </button>
+            </div>
+            <p className="dialog-copy">{qrEntry.accountName}</p>
+            <button
+              aria-label="Copy setup link from QR code"
+              className="qr-code-button"
+              type="button"
+              onClick={() => void handleCopyOtpUri(qrUri)}
+            >
+              {qrCodeMarkup ? (
+                <span
+                  aria-hidden="true"
+                  className="qr-code-frame"
+                  dangerouslySetInnerHTML={{ __html: qrCodeMarkup }}
+                />
+              ) : (
+                <span className="qr-code-loading">Creating QR code...</span>
+              )}
+              {qrCopied ? <span className="qr-code-feedback">Code setup link copied</span> : null}
+            </button>
           </section>
         </div>
       ) : null}

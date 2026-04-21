@@ -469,6 +469,32 @@ describe("popup app", () => {
     expect(screen.getByLabelText("Example color marker")).toHaveStyle({ background: "#ffffff" });
   });
 
+  it("shows a QR code dialog from the entry menu and copies the setup link when the QR is clicked", async () => {
+    const user = userEvent.setup();
+
+    render(<App copyText={writeText} repository={createRepository()} now={() => 0} />);
+
+    await user.click(await screen.findByRole("button", { name: "More options for Example" }));
+    await user.click(screen.getByRole("menuitem", { name: "Show QR code" }));
+
+    const dialog = screen.getByRole("dialog", { name: "Use in another app" });
+    expect(dialog).toBeInTheDocument();
+    expect(within(dialog).getByText("alice@example.com")).toBeInTheDocument();
+    expect(within(dialog).queryByText("Click the QR code to copy the code setup link")).not.toBeInTheDocument();
+    expect(within(dialog).queryByText("Code setup link copied")).not.toBeInTheDocument();
+    expect(within(dialog).getByRole("button", { name: "Close QR dialog" })).toBeInTheDocument();
+    expect(within(dialog).queryByRole("button", { name: "Close" })).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Copy setup link from QR code" }));
+
+    await waitFor(() => {
+      expect(writeText).toHaveBeenCalledWith(
+        "otpauth://totp/Example:alice%40example.com?issuer=Example&secret=JBSWY3DPEHPK3PXP&algorithm=SHA1&digits=6&period=30"
+      );
+    });
+    expect(within(dialog).getByText("Code setup link copied")).toBeInTheDocument();
+  });
+
   it("renders a compact split card with the code row below the identity block", async () => {
     render(<App copyText={writeText} repository={createRepository([longEntry])} now={() => 0} />);
 
