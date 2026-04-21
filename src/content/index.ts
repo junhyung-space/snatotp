@@ -180,7 +180,7 @@ function openCaptureOverlay() {
   box.style.display = "none";
   box.style.pointerEvents = "none";
 
-  hint.textContent = "Drag around the QR code";
+  hint.textContent = "Drag to select the QR code";
   hint.style.position = "fixed";
   hint.style.left = "50%";
   hint.style.top = "18px";
@@ -218,6 +218,7 @@ function openCaptureOverlay() {
     dragging = true;
     startX = event.clientX;
     startY = event.clientY;
+    hint.style.display = "none";
     root.setPointerCapture(event.pointerId);
     draw(startX, startY);
   });
