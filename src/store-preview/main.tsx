@@ -190,8 +190,8 @@ function StorePreview() {
         };
       case "protection":
         return {
-          headline: "Lock saved entries when you want.",
-          subheadline: "Turn on optional passphrase protection with auto-lock.",
+          headline: "Lock your accounts when you want.",
+          subheadline: "Add a password to protect your accounts with auto-lock.",
           stageClassName: "store-stage",
           settingsSection: "protection" as const,
           popupSecurityState: {
@@ -225,8 +225,8 @@ function StorePreview() {
       case "import":
       default:
         return {
-          headline: "Add accounts from QR or otpauth://",
-          subheadline: "Use the settings page to upload, paste, or capture.",
+          headline: "Add accounts from QR images or links.",
+          subheadline: "Upload a QR image, paste an authentication link, or scan from the page.",
           stageClassName: "store-stage",
           settingsSection: "import" as const,
           popupSecurityState: {
@@ -292,7 +292,7 @@ function StorePreview() {
                     <strong>Google</strong>
                     <span>work@team.io</span>
                   </div>
-                  <em>502614</em>
+                  <em>502 614</em>
                 </div>
                 <div className="store-stack-entry">
                   <i style={{ background: "#17a689" }} />
@@ -300,7 +300,7 @@ function StorePreview() {
                     <strong>GitHub</strong>
                     <span>junhyung-space</span>
                   </div>
-                  <em>831947</em>
+                  <em>831 947</em>
                 </div>
                 <div className="store-stack-entry">
                   <i style={{ background: "#4f80ff" }} />
@@ -308,7 +308,7 @@ function StorePreview() {
                     <strong>Slack</strong>
                     <span>ops@snapotp.app</span>
                   </div>
-                  <em>274110</em>
+                  <em>274 110</em>
                 </div>
               </div>
             </div>
