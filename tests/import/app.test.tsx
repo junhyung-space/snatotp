@@ -82,12 +82,12 @@ describe("import section", () => {
     expect(screen.getByRole("tab", { name: "Upload" })).toHaveAttribute("aria-selected", "true");
     expect(container.querySelector(".import-stage")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Drop QR image here/i })).toBeInTheDocument();
-    expect(screen.queryByRole("textbox", { name: "Authentication link" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("textbox", { name: "Authentication links" })).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("tab", { name: "Link" }));
 
     expect(screen.getByRole("tab", { name: "Link" })).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByRole("textbox", { name: "Authentication link" })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "Authentication links" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Add account" })).toBeInTheDocument();
   });
 
@@ -206,7 +206,7 @@ describe("import section", () => {
     );
 
     await user.click(screen.getByRole("tab", { name: "Link" }));
-    await user.type(screen.getByRole("textbox", { name: "Authentication link" }), otpUrl);
+    await user.type(screen.getByRole("textbox", { name: "Authentication links" }), otpUrl);
     await user.click(screen.getByRole("button", { name: "Add account" }));
 
     await waitFor(() => {
@@ -218,6 +218,84 @@ describe("import section", () => {
       sourceType: "url"
     });
     expect(await screen.findByText("Added: Test1")).toBeInTheDocument();
+  });
+
+  it("saves multiple pasted otpauth URLs and shows a summary", async () => {
+    const user = userEvent.setup();
+    const save = vi.fn();
+    const otpUrl2 = "otpauth://totp/Test2:user2@test.com?secret=KRUGS4ZANFZSAYJA&issuer=Test2";
+    const onImportSaved = vi.fn();
+
+    render(
+      <ImportSection
+        onImportSaved={onImportSaved}
+        repository={createRepository({
+          async save(entry) {
+            save(entry);
+            return entry;
+          }
+        })}
+      />
+    );
+
+    await user.click(screen.getByRole("tab", { name: "Link" }));
+    await user.type(
+      screen.getByRole("textbox", { name: "Authentication links" }),
+      `${otpUrl}\n\n${otpUrl2}`
+    );
+    expect(screen.getByRole("button", { name: "Add accounts" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Add accounts" }));
+
+    await waitFor(() => {
+      expect(save).toHaveBeenCalledTimes(2);
+    });
+    expect(save.mock.calls.map((call) => call[0].serviceName)).toEqual(["Test1", "Test2"]);
+    expect(await screen.findByText("Added 2 accounts.")).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "Authentication links" })).toHaveValue("");
+    expect(onImportSaved).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps only failed pasted links after a mixed URL import", async () => {
+    const user = userEvent.setup();
+    const invalidUrl = "https://example.com/not-otp";
+    const otpUrl2 = "otpauth://totp/Test2:user2@test.com?secret=KRUGS4ZANFZSAYJA&issuer=Test2";
+    const save = vi.fn();
+    const onImportSaved = vi.fn();
+
+    render(
+      <ImportSection
+        onImportSaved={onImportSaved}
+        repository={createRepository({
+          async save(entry) {
+            save(entry);
+            if (entry.serviceName === "Test1") {
+              return {
+                entry,
+                status: "duplicate" as const
+              };
+            }
+
+            return entry;
+          }
+        })}
+      />
+    );
+
+    await user.click(screen.getByRole("tab", { name: "Link" }));
+    await user.type(
+      screen.getByRole("textbox", { name: "Authentication links" }),
+      `${otpUrl}\n${invalidUrl}\n${otpUrl2}`
+    );
+    await user.click(screen.getByRole("button", { name: "Add accounts" }));
+
+    await waitFor(() => {
+      expect(save).toHaveBeenCalledTimes(2);
+    });
+    expect(
+      await screen.findByText("Added 1 account. 1 already existed. 1 link could not be imported.")
+    ).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "Authentication links" })).toHaveValue(invalidUrl);
+    expect(onImportSaved).toHaveBeenCalledTimes(1);
   });
 
   it("shows a duplicate message after an existing otpauth URL", async () => {
@@ -237,7 +315,7 @@ describe("import section", () => {
     );
 
     await user.click(screen.getByRole("tab", { name: "Link" }));
-    await user.type(screen.getByRole("textbox", { name: "Authentication link" }), otpUrl);
+    await user.type(screen.getByRole("textbox", { name: "Authentication links" }), otpUrl);
     await user.click(screen.getByRole("button", { name: "Add account" }));
 
     expect(await screen.findByText("Already added: Test1")).toBeInTheDocument();
@@ -249,11 +327,11 @@ describe("import section", () => {
     render(<ImportSection repository={createRepository()} />);
 
     await user.click(screen.getByRole("tab", { name: "Link" }));
-    await user.type(screen.getByRole("textbox", { name: "Authentication link" }), "https://example.com");
+    await user.type(screen.getByRole("textbox", { name: "Authentication links" }), "https://example.com");
     await user.click(screen.getByRole("button", { name: "Add account" }));
     expect(await screen.findByText("Paste a valid authentication link")).toBeInTheDocument();
 
-    await user.type(screen.getByRole("textbox", { name: "Authentication link" }), "x");
+    await user.type(screen.getByRole("textbox", { name: "Authentication links" }), "x");
 
     expect(screen.queryByText("Paste a valid authentication link")).not.toBeInTheDocument();
   });

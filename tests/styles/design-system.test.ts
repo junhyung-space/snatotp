@@ -158,8 +158,9 @@ describe("design system tokens", () => {
     expect(entryRowBlock).toContain("row-gap: var(--otp-card-row-gap);");
     expect(entryRowBlock).toContain("column-gap: var(--otp-card-column-gap);");
     expect(compactRowBlock).toContain("padding: var(--otp-card-padding-y-compact) var(--otp-card-padding-x);");
-    expect(codeRowBlock).toContain("padding: 0 0 0 var(--otp-card-code-row-offset);");
-    expect(compactCodeRowBlock).toContain("padding-left: var(--otp-card-code-row-offset-compact);");
+    expect(entryRowBlock).toContain("grid-template-areas:");
+    expect(codeRowBlock).toContain("padding: 0;");
+    expect(compactCodeRowBlock).toContain("padding-left: 0;");
     expect(popupStyles).toContain("font-size: var(--otp-code-size-compact);");
     expect(markerBlock).toContain("width: var(--otp-marker-size);");
     expect(markerBlock).toContain("font-size: var(--otp-marker-font-size);");

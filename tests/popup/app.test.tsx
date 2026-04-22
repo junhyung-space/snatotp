@@ -172,6 +172,14 @@ describe("popup app", () => {
     expect(await screen.findByText("Copied")).toBeInTheDocument();
   });
 
+  it("renders the color marker outside the identity button so it can stay centered in the card", async () => {
+    render(<App copyText={writeText} repository={createRepository()} now={() => 0} />);
+
+    const marker = await screen.findByLabelText("Example color marker");
+
+    expect(marker.closest("button")).toBeNull();
+  });
+
   it("keeps the top action row icon-only in the empty state", async () => {
     render(
       <App

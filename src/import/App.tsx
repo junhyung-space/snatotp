@@ -23,6 +23,57 @@ function isSaveResult(result: Awaited<ReturnType<OtpRepository["save"]>>): resul
   return typeof result === "object" && result !== null && "status" in result;
 }
 
+function getPastedOtpLinks(value: string) {
+  return value
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function formatAccountCount(count: number) {
+  return `${count} ${count === 1 ? "account" : "accounts"}`;
+}
+
+function formatLinkCount(count: number) {
+  return `${count} ${count === 1 ? "link" : "links"}`;
+}
+
+function getUrlImportSummaryKind(created: number, duplicate: number, failed: number): FeedbackMessage["kind"] {
+  if (failed > 0) {
+    return created > 0 || duplicate > 0 ? "warning" : "error";
+  }
+
+  return duplicate > 0 ? "warning" : "success";
+}
+
+function createUrlImportSummaryMessage(created: number, duplicate: number, failed: number): FeedbackMessage {
+  const parts: string[] = [];
+
+  if (created > 0) {
+    parts.push(`Added ${formatAccountCount(created)}.`);
+  }
+
+  if (duplicate > 0) {
+    if (created === 0 && failed === 0) {
+      parts.push(`All ${formatAccountCount(duplicate)} are already added.`);
+    } else {
+      parts.push(`${duplicate} already existed.`);
+    }
+  }
+
+  if (failed > 0) {
+    if (created === 0 && duplicate === 0) {
+      parts.push("No accounts were imported.");
+    }
+    parts.push(`${formatLinkCount(failed)} could not be imported.`);
+  }
+
+  return {
+    kind: getUrlImportSummaryKind(created, duplicate, failed),
+    text: parts.join(" ")
+  };
+}
+
 async function saveOtpUri(repository: OtpRepository, otpUri: string, sourceType: SourceType): Promise<OtpSaveResult> {
   const trimmedOtpUri = otpUri.trim();
 
@@ -58,6 +109,8 @@ export function ImportSection({
   const [message, setMessage] = useState<FeedbackMessage | null>(null);
   const [busy, setBusy] = useState(false);
   const [dragActive, setDragActive] = useState(false);
+  const pastedOtpLinks = getPastedOtpLinks(otpUrl);
+  const hasMultiplePastedLinks = pastedOtpLinks.length > 1;
 
   async function importOtpUri(otpUri: string, sourceType: SourceType) {
     if (busy) {
@@ -81,6 +134,51 @@ export function ImportSection({
       }
     } catch (error) {
       setMessage(createErrorMessage(error, "Import failed"));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function importOtpUrls(otpUrls: string) {
+    if (busy) {
+      return;
+    }
+
+    const links = getPastedOtpLinks(otpUrls);
+
+    if (links.length <= 1) {
+      await importOtpUri(otpUrls, "url");
+      return;
+    }
+
+    setMessage(null);
+    setBusy(true);
+
+    let created = 0;
+    let duplicate = 0;
+    const failedLinks: string[] = [];
+
+    try {
+      for (const link of links) {
+        try {
+          const result = await saveOtpUri(repository, link, "url");
+
+          if (result.status === "created") {
+            created += 1;
+          } else {
+            duplicate += 1;
+          }
+        } catch {
+          failedLinks.push(link);
+        }
+      }
+
+      setOtpUrl(failedLinks.join("\n"));
+      setMessage(createUrlImportSummaryMessage(created, duplicate, failedLinks.length));
+
+      if (created > 0) {
+        await onImportSaved?.();
+      }
     } finally {
       setBusy(false);
     }
@@ -202,17 +300,17 @@ export function ImportSection({
               className="url-form"
               onSubmit={(event) => {
                 event.preventDefault();
-                void importOtpUri(otpUrl, "url");
+                void importOtpUrls(otpUrl);
               }}
             >
               <label className="url-label" htmlFor="otp-url-input">
-                Authentication link
+                Authentication links
               </label>
               <textarea
-                aria-label="Authentication link"
+                aria-label="Authentication links"
                 className="url-input"
                 id="otp-url-input"
-                placeholder="Paste your authentication link here"
+                placeholder="Paste one or more authentication links, one per line"
                 value={otpUrl}
                 disabled={busy}
                 onChange={(event) => {
@@ -222,7 +320,7 @@ export function ImportSection({
               />
               <div className="url-form-actions">
                 <button className="url-submit" type="submit" disabled={busy}>
-                  {busy ? "Adding…" : "Add account"}
+                  {busy ? "Adding..." : hasMultiplePastedLinks ? "Add accounts" : "Add account"}
                 </button>
               </div>
             </form>

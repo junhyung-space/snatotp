@@ -551,13 +551,14 @@ export function App({
                 }}
               >
                 <div className="entry-row">
+                  <EntryMarker entry={entry} />
+
                   <button
                     aria-label={`${entry.serviceName} ${entry.accountName}`}
                     className="entry-identity"
                     type="button"
                     onClick={() => void handleCopy(entry)}
                   >
-                    <EntryMarker entry={entry} />
                     <div className="entry-text">
                       <span className="service-name">{entry.serviceName}</span>
                       <span className="account-name">{entry.accountName}</span>

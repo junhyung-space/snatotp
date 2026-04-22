@@ -203,7 +203,10 @@ body {
   border: 1px solid var(--color-border-card);
   background: var(--color-surface);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "marker identity menu"
+    "marker code code";
   row-gap: var(--otp-card-row-gap);
   column-gap: var(--otp-card-column-gap);
   align-items: center;
@@ -217,10 +220,10 @@ body {
 }
 
 .entry-identity {
+  grid-area: identity;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
-  gap: var(--space-3);
   min-width: 0;
   border: 0;
   background: transparent;
@@ -231,12 +234,12 @@ body {
 }
 
 .entry-code-row {
-  grid-column: 1 / -1;
+  grid-area: code;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--space-3);
-  padding: 0 0 0 var(--otp-card-code-row-offset);
+  padding: 0;
   min-width: 0;
   border: 0;
   background: transparent;
@@ -246,7 +249,7 @@ body {
 }
 
 .density-compact .entry-code-row {
-  padding-left: var(--otp-card-code-row-offset-compact);
+  padding-left: 0;
 }
 
 .service-name,
@@ -380,6 +383,9 @@ body {
 }
 
 .menu-button {
+  grid-area: menu;
+  justify-self: end;
+  align-self: center;
   width: 28px;
   height: 28px;
   margin-top: 0;
@@ -883,6 +889,9 @@ body {
 }
 
 .entry-marker {
+  grid-area: marker;
+  align-self: center;
+  justify-self: start;
   width: var(--otp-marker-size);
   height: var(--otp-marker-size);
   flex: 0 0 var(--otp-marker-size);
