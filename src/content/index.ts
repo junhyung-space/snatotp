@@ -1,6 +1,8 @@
 const OPEN_CAPTURE_OVERLAY_MESSAGE = "open-capture-overlay";
 const CAPTURE_SELECTION_RESULT_MESSAGE = "capture-selection-result";
 const CAPTURE_STATUS_MESSAGE = "capture-status";
+const APP_FONT_STACK =
+  'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif';
 
 type CaptureSelection = {
   x: number;
@@ -116,13 +118,13 @@ export function createCaptureStatusToast(
         : status === "warning"
           ? "#8a5514"
           : "#8f2626";
-  title.style.font = "700 14px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+  title.style.font = `700 14px ${APP_FONT_STACK}`;
   title.style.letterSpacing = "-0.01em";
 
   body.textContent = message;
   body.style.margin = "0";
   body.style.color = "#45566f";
-  body.style.font = "600 13px/1.45 -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+  body.style.font = `600 13px/1.45 ${APP_FONT_STACK}`;
 
   copy.append(title, body);
   root.append(badge, copy);
@@ -189,7 +191,7 @@ function openCaptureOverlay() {
   hint.style.borderRadius = "999px";
   hint.style.background = "rgba(255, 255, 255, 0.94)";
   hint.style.color = "#132033";
-  hint.style.font = "600 13px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+  hint.style.font = `600 13px ${APP_FONT_STACK}`;
   hint.style.boxShadow = "0 16px 36px rgba(15, 23, 42, 0.18)";
   hint.style.pointerEvents = "none";
 

@@ -8,7 +8,7 @@ body,
 
 body {
   margin: 0;
-  font-family: "SF Pro Display", "SF Pro Text", "Segoe UI", sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   background: #f7fafc;
 }
 
