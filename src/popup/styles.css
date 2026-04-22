@@ -32,12 +32,12 @@ body {
 
 .popup-title {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 6px;
 }
 
 .count-badge {
-  margin-top: 2px;
+  margin-top: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -54,7 +54,7 @@ body {
 
 .popup-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 10px;
 }
@@ -74,39 +74,40 @@ body {
 .popup-header h1 {
   font-size: 17px;
   letter-spacing: -0.03em;
+  line-height: 36px;
 }
 
 .action-row {
   display: flex;
   gap: 6px;
-  padding-top: 1px;
+  padding-top: 0;
 }
 
 .icon-button {
-  width: 32px;
-  height: 32px;
-  border: 0;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(19, 32, 51, 0.08);
   border-radius: 50%;
-  background: transparent;
+  background: #ffffff;
   display: grid;
   place-items: center;
   cursor: pointer;
-  color: #4a6080;
+  color: #435a76;
   transition:
-    transform 140ms ease,
     background-color 140ms ease,
+    border-color 140ms ease,
     color 140ms ease;
 }
 
 .icon-button:hover {
-  transform: scale(1.08);
-  background: rgba(19, 32, 51, 0.07);
+  background: #edf3fb;
+  border-color: rgba(19, 32, 51, 0.12);
   color: #19304f;
 }
 
 .action-icon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
 
 .entry-list {

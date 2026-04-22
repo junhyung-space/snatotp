@@ -240,10 +240,24 @@ describe("popup app", () => {
       />
     );
 
-    expect(screen.getByLabelText("Scan QR code from screen")).toBeInTheDocument();
-    expect(screen.getByLabelText("Settings")).toBeInTheDocument();
+    const scanButton = screen.getByLabelText("Scan QR code from screen");
+    const settingsButton = screen.getByLabelText("Settings");
+    expect(scanButton).toBeInTheDocument();
+    expect(settingsButton).toBeInTheDocument();
+    expect(scanButton.querySelector(".capture-icon")).toBeInTheDocument();
+    expect(settingsButton.querySelector(".settings-sliders-icon")).toBeInTheDocument();
     expect(screen.queryByText("Cap")).not.toBeInTheDocument();
     expect(screen.queryByText("Set")).not.toBeInTheDocument();
+
+    const popupStyles = readFileSync("src/popup/styles.css", "utf8");
+    expect(popupStyles).toContain(".popup-title {\n  display: flex;\n  align-items: center;");
+    expect(popupStyles).toContain(".popup-header {\n  display: flex;\n  align-items: center;");
+    expect(popupStyles).toContain(".action-row {\n  display: flex;\n  gap: 6px;\n  padding-top: 0;");
+    expect(popupStyles).toContain(".icon-button {\n  width: 36px;\n  height: 36px;");
+    expect(popupStyles).toContain("  border: 1px solid rgba(19, 32, 51, 0.08);");
+    expect(popupStyles).toContain("  background: #ffffff;");
+    expect(popupStyles).not.toContain("transform: scale(1.08);");
+    expect(popupStyles).toContain(".action-icon {\n  width: 18px;\n  height: 18px;");
   });
 
   it("shows text-only empty state guidance for first import", async () => {
@@ -525,6 +539,42 @@ describe("popup app", () => {
     expect(entryRow.querySelector(".timer-dot")).not.toBeNull();
     expect(entryRow.querySelector(".timer-badge-calm")).not.toBeNull();
     expect(entryRow.querySelector(".timer-rail")).toBeNull();
+  });
+
+  it("shows a single alphanumeric marker character and leaves it blank when none exists", async () => {
+    const specialNameEntry = {
+      ...entryA,
+      id: "special-name",
+      serviceName: "--@GitHub-HMG",
+      accountName: "alpha@example.com",
+      sortOrder: 0
+    };
+    const accountFallbackEntry = {
+      ...entryB,
+      id: "account-fallback",
+      serviceName: "---",
+      accountName: "__7backup@example.com",
+      sortOrder: 1
+    };
+    const blankMarkerEntry = {
+      ...longEntry,
+      id: "blank-marker",
+      serviceName: "!!!",
+      accountName: "___",
+      sortOrder: 2
+    };
+
+    render(
+      <App
+        copyText={writeText}
+        repository={createRepository([specialNameEntry, accountFallbackEntry, blankMarkerEntry])}
+        now={() => 0}
+      />
+    );
+
+    expect(await screen.findByLabelText("--@GitHub-HMG color marker")).toHaveTextContent("G");
+    expect(screen.getByLabelText("--- color marker")).toHaveTextContent("7");
+    expect(screen.getByLabelText("!!! color marker")).toHaveTextContent("");
   });
 
   it("uses a flat popup background and border-defined cards for the otp list", async () => {

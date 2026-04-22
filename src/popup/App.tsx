@@ -70,16 +70,23 @@ function getMarkerTextColor(color: string) {
   return luminance > 150 ? "#132033" : "#ffffff";
 }
 
+function getEntryMarkerLetter(entry: OtpEntry) {
+  const markerSource = `${entry.serviceName} ${entry.accountName}`;
+  const markerLetter = markerSource.match(/[\p{L}\p{N}]/u)?.[0] ?? "";
+
+  return markerLetter.toLocaleUpperCase();
+}
+
 function CaptureIcon() {
   return (
-    <svg aria-hidden="true" className="action-icon" viewBox="0 0 24 24">
+    <svg aria-hidden="true" className="action-icon capture-icon" viewBox="0 0 24 24">
       <path
-        d="M8 4H6a2 2 0 0 0-2 2v2m12-4h2a2 2 0 0 1 2 2v2M8 20H6a2 2 0 0 1-2-2v-2m12 4h2a2 2 0 0 0 2-2v-2M9 9h6v6H9z"
+        d="M7.25 5H6a1 1 0 0 0-1 1v1.25m12-2.25h1a1 1 0 0 1 1 1v1.25M7.25 19H6a1 1 0 0 1-1-1v-1.25m14 0V18a1 1 0 0 1-1 1h-1.25M9 9h2.5v2.5H9zM13.5 9H16v2.5h-2.5zM9 13.5h2.5V16H9zM13.5 13.5H16V16h-2.5z"
         fill="none"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="1.8"
+        strokeWidth="1.65"
       />
     </svg>
   );
@@ -87,26 +94,24 @@ function CaptureIcon() {
 
 function SettingsIcon() {
   return (
-    <svg aria-hidden="true" className="action-icon" viewBox="0 0 24 24">
+    <svg aria-hidden="true" className="action-icon settings-sliders-icon" viewBox="0 0 24 24">
       <path
-        d="M12 9.25A2.75 2.75 0 1 0 12 14.75 2.75 2.75 0 1 0 12 9.25zM4.75 13.25v-2.5l2-.5c.15-.48.34-.93.58-1.35l-1.12-1.75 1.77-1.77 1.74 1.12c.43-.24.88-.43 1.36-.58l.5-2h2.5l.5 2c.47.15.92.34 1.35.58l1.75-1.12 1.77 1.77-1.12 1.75c.24.42.43.87.58 1.35l2 .5v2.5l-2 .5c-.15.47-.34.92-.58 1.35l1.12 1.75-1.77 1.77-1.75-1.12c-.43.24-.88.43-1.35.58l-.5 2h-2.5l-.5-2a7.2 7.2 0 0 1-1.36-.58l-1.74 1.12-1.77-1.77 1.12-1.75a7.2 7.2 0 0 1-.58-1.35z"
+        d="M5 7h6m4 0h4M5 12h2m4 0h8M5 17h8m4 0h2"
         fill="none"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="1.4"
+        strokeWidth="1.65"
       />
+      <circle cx="13" cy="7" r="1.55" fill="none" stroke="currentColor" strokeWidth="1.65" />
+      <circle cx="9" cy="12" r="1.55" fill="none" stroke="currentColor" strokeWidth="1.65" />
+      <circle cx="15" cy="17" r="1.55" fill="none" stroke="currentColor" strokeWidth="1.65" />
     </svg>
   );
 }
 
 function EntryMarker({ entry }: { entry: OtpEntry }) {
-  const initials = entry.serviceName
-    .trim()
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? "")
-    .join("");
+  const markerLetter = getEntryMarkerLetter(entry);
 
   return (
     <span
@@ -119,7 +124,7 @@ function EntryMarker({ entry }: { entry: OtpEntry }) {
         } satisfies CSSProperties
       }
     >
-      {initials || "OT"}
+      {markerLetter}
     </span>
   );
 }
