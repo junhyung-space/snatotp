@@ -54,12 +54,12 @@ body {
 
 .capture-heading h1 {
   margin: 0;
-  font-size: 32px;
+  font-size: var(--font-size-display-xl);
   letter-spacing: -0.04em;
 }
 
 .capture-heading p {
-  font-size: 14px;
+  font-size: var(--font-size-body-xl);
 }
 
 .capture-stage-panel {
@@ -91,7 +91,7 @@ body {
 
 .capture-selection {
   position: absolute;
-  border: 2px solid #3a78ff;
+  border: 2px solid var(--color-accent-hover);
   border-radius: 20px;
   background: rgba(58, 120, 255, 0.22);
   pointer-events: none;
@@ -99,7 +99,7 @@ body {
 
 .capture-placeholder {
   color: var(--color-text-muted);
-  font-size: 14px;
+  font-size: var(--font-size-body-xl);
 }
 
 .capture-footer {
@@ -116,12 +116,12 @@ body {
 }
 
 .capture-meta strong {
-  font-size: 14px;
+  font-size: var(--font-size-body-xl);
   color: var(--color-text-strong);
 }
 
 .capture-meta span {
-  font-size: 13px;
+  font-size: var(--font-size-body-lg);
 }
 
 .capture-actions {

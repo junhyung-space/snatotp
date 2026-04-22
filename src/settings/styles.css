@@ -45,7 +45,7 @@ body {
 }
 
 .settings-kicker {
-  color: #5b78ae;
+  color: var(--color-info);
   font-size: var(--font-size-label);
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -85,7 +85,7 @@ body {
   border-radius: var(--radius-card);
   background: transparent;
   color: var(--color-text-muted);
-  font-size: 14px;
+  font-size: var(--font-size-body-xl);
   font-weight: 700;
   text-align: left;
 }
@@ -126,20 +126,20 @@ body {
 
 .settings-section-header h2 {
   margin: 0;
-  font-size: 30px;
+  font-size: var(--font-size-display-lg);
   letter-spacing: -0.05em;
 }
 
 .settings-section-header p {
   color: var(--color-text-muted);
-  font-size: 15px;
+  font-size: var(--font-size-body-xxl);
   line-height: 1.5;
 }
 
 .settings-meta-text {
   margin: 2px 0 0;
   color: var(--color-text-subtle);
-  font-size: 13px;
+  font-size: var(--font-size-body-lg);
   font-weight: 600;
 }
 
@@ -168,7 +168,7 @@ body {
 }
 
 .settings-row-danger {
-  background: rgba(255, 248, 248, 0.82);
+  background: var(--color-danger-surface);
 }
 
 .settings-row-copy {
@@ -179,7 +179,7 @@ body {
 .settings-row h3,
 .settings-form-card h3 {
   color: var(--color-text-strong);
-  font-size: 18px;
+  font-size: var(--font-size-title-lg);
   letter-spacing: -0.03em;
 }
 
@@ -187,7 +187,7 @@ body {
 .settings-form-card p,
 .settings-copy {
   color: var(--color-text-muted);
-  font-size: 14px;
+  font-size: var(--font-size-body-xl);
   line-height: 1.55;
 }
 
@@ -221,21 +221,21 @@ body {
 }
 
 .settings-form-card-danger {
-  background: rgba(255, 248, 248, 0.96);
+  background: var(--color-danger-surface);
 }
 
 .settings-status-pill {
   justify-self: start;
   padding: 7px 11px;
   border-radius: var(--radius-pill);
-  background: #dce7ff;
-  color: #1e4ea8;
+  background: var(--color-info-soft);
+  color: var(--color-info);
   font-size: var(--font-size-body);
   font-weight: 700;
 }
 
 .settings-status-pill.protected {
-  background: #e5f4eb;
+  background: var(--color-success-soft);
   color: var(--color-success);
 }
 
@@ -287,8 +287,8 @@ body {
 }
 
 .settings-danger-button {
-  background: #f7e6e5;
-  color: #a13d3b;
+  background: var(--color-danger-action-soft);
+  color: var(--color-danger-text);
 }
 
 .settings-primary-button:disabled,
@@ -345,7 +345,7 @@ body {
 
 .settings-inline-message.error {
   background: var(--color-danger-soft);
-  color: #991b1b;
+  color: var(--color-danger-text);
 }
 
 .settings-hidden-input {
@@ -364,7 +364,7 @@ body {
   display: grid;
   place-items: center;
   padding: 24px;
-  background: rgba(247, 250, 252, 0.92);
+  background: var(--color-overlay);
 }
 
 .settings-dialog {

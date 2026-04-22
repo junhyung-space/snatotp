@@ -14,6 +14,6 @@ describe("feedback color semantics", () => {
     const source = readFileSync("src/import/styles.css", "utf8");
 
     expect(source).toContain("background: var(--color-danger-soft);");
-    expect(source).toContain("color: #991b1b;");
+    expect(source).toContain("color: var(--color-danger-text);");
   });
 });

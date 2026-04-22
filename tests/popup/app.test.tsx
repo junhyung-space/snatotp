@@ -586,10 +586,10 @@ describe("popup app", () => {
       popupStyles.indexOf(".color-grid {")
     );
 
-    expect(markerBlock).toContain("font-size: var(--font-size-caption);");
+    expect(markerBlock).toContain("font-size: var(--otp-marker-font-size);");
     expect(markerBlock).toContain("font-weight: 800;");
     expect(markerBlock).toContain("letter-spacing: 0;");
-    expect(compactMarkerBlock).toContain("font-size: var(--font-size-micro);");
+    expect(compactMarkerBlock).toContain("font-size: var(--otp-marker-font-size-compact);");
   });
 
   it("uses a flat popup background and border-defined cards for the otp list", async () => {
@@ -656,7 +656,7 @@ describe("popup app", () => {
       popupStyles.indexOf(".qr-code-button:hover {")
     );
 
-    expect(dialogScrimBlock).toContain("background: rgba(247, 250, 252, 0.92);");
+    expect(dialogScrimBlock).toContain("background: var(--color-overlay);");
     expect(dialogScrimBlock).not.toContain("backdrop-filter");
     expect(entryDialogBlock).toContain("border: 1px solid var(--color-border-subtle);");
     expect(entryDialogBlock).toContain("background: var(--color-surface);");

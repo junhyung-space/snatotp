@@ -25,13 +25,35 @@
   --color-accent-strong: #1f4db3;
   --color-accent-soft: #eef4ff;
   --color-accent-hover: #2f6fed;
+  --color-accent-tint: rgba(31, 95, 232, 0.08);
+  --color-focus-ring: rgba(47, 111, 237, 0.16);
+
+  --color-info: #1e4ea8;
+  --color-info-soft: #e8f0ff;
+  --color-info-border: rgba(47, 111, 237, 0.45);
 
   --color-success: #146c43;
+  --color-success-strong: #166534;
   --color-success-soft: #ecfdf5;
+  --color-success-highlight: rgba(236, 253, 245, 0.96);
+  --color-success-toast: rgba(20, 108, 67, 0.92);
+
   --color-warning: #9a5b10;
   --color-warning-soft: #fff4df;
+  --color-warning-dot: #f59e0b;
+
   --color-danger: #b42318;
+  --color-danger-strong: #a13d3b;
+  --color-danger-text: #991b1b;
   --color-danger-soft: #fef2f2;
+  --color-danger-surface: #fff8f8;
+  --color-danger-action: #c14b49;
+  --color-danger-action-soft: #f7e6e5;
+  --color-danger-control: #f5e7e7;
+  --color-danger-border: rgba(193, 75, 73, 0.12);
+  --color-danger-dot: #ef4444;
+
+  --color-overlay: rgba(247, 250, 252, 0.92);
 
   --space-1: 4px;
   --space-2: 6px;
@@ -58,11 +80,31 @@
   --font-size-label: 11px;
   --font-size-body: 12px;
   --font-size-body-lg: 13px;
+  --font-size-body-xl: 14px;
+  --font-size-body-xxl: 15px;
+  --font-size-title-sm: 16px;
   --font-size-title: 17px;
+  --font-size-title-lg: 18px;
+  --font-size-title-xl: 22px;
+  --font-size-display-sm: 24px;
   --font-size-display: 28px;
+  --font-size-display-lg: 30px;
+  --font-size-display-xl: 32px;
   --font-size-code: 17px;
 
   --otp-card-height: 60px;
   --otp-card-height-compact: 56px;
   --otp-card-gap: 6px;
+  --otp-card-padding-y: 7px;
+  --otp-card-padding-x: 10px;
+  --otp-card-padding-y-compact: 6px;
+  --otp-card-row-gap: 4px;
+  --otp-card-column-gap: 6px;
+  --otp-card-code-row-offset: 32px;
+  --otp-card-code-row-offset-compact: 30px;
+  --otp-code-size-compact: 16px;
+  --otp-marker-size: 24px;
+  --otp-marker-size-compact: 22px;
+  --otp-marker-font-size: 10px;
+  --otp-marker-font-size-compact: 9px;
 }

@@ -40,7 +40,7 @@
 }
 
 .import-copy {
-  font-size: 14px;
+  font-size: var(--font-size-body-xl);
   line-height: 1.45;
 }
 
@@ -61,7 +61,7 @@
   background: transparent;
   color: var(--color-text-muted);
   font: inherit;
-  font-size: 13px;
+  font-size: var(--font-size-body-lg);
   font-weight: 700;
   cursor: pointer;
   transition:
@@ -124,18 +124,18 @@
 }
 
 .import-dropzone strong {
-  font-size: 18px;
+  font-size: var(--font-size-title-lg);
   color: var(--color-text-strong);
   letter-spacing: -0.03em;
 }
 
 .import-dropzone span {
-  font-size: 13px;
+  font-size: var(--font-size-body-lg);
 }
 
 .import-dropzone-subtitle {
-  color: #56709b;
-  font-size: 12px;
+  color: var(--color-info);
+  font-size: var(--font-size-body);
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -147,15 +147,15 @@
 
 .import-message {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--font-size-body-lg);
   padding: 9px 11px;
   border-radius: 14px;
   font-weight: 700;
 }
 
 .import-message.info {
-  background: #e8f0ff;
-  color: #1e4ea8;
+  background: var(--color-info-soft);
+  color: var(--color-info);
 }
 
 .import-message.success {
@@ -170,7 +170,7 @@
 
 .import-message.error {
   background: var(--color-danger-soft);
-  color: #991b1b;
+  color: var(--color-danger-text);
 }
 
 .url-form {
@@ -186,7 +186,7 @@
 }
 
 .url-label {
-  font-size: 12px;
+  font-size: var(--font-size-body);
   font-weight: 700;
 }
 
@@ -201,13 +201,13 @@
   background: var(--color-surface-subtle);
   color: var(--color-text-primary);
   font: inherit;
-  font-size: 13px;
+  font-size: var(--font-size-body-lg);
   line-height: 1.45;
 }
 
 .url-input:focus {
-  outline: 3px solid rgba(47, 111, 237, 0.16);
-  border-color: rgba(47, 111, 237, 0.45);
+  outline: 3px solid var(--color-focus-ring);
+  border-color: var(--color-info-border);
 }
 
 .url-submit {
@@ -218,7 +218,7 @@
   background: var(--color-accent);
   color: white;
   font: inherit;
-  font-size: 13px;
+  font-size: var(--font-size-body-lg);
   font-weight: 700;
   cursor: pointer;
 }
@@ -248,14 +248,14 @@
 }
 
 .import-busy-overlay strong {
-  color: #15345d;
-  font-size: 18px;
+  color: var(--color-text-strong);
+  font-size: var(--font-size-title-lg);
   letter-spacing: -0.02em;
 }
 
 .import-busy-overlay span:last-child {
   color: var(--color-text-muted);
-  font-size: 13px;
+  font-size: var(--font-size-body-lg);
   line-height: 1.5;
   max-width: 240px;
 }
@@ -264,8 +264,8 @@
   width: 34px;
   height: 34px;
   border-radius: 999px;
-  border: 3px solid rgba(47, 111, 237, 0.16);
-  border-top-color: #2f6fed;
+  border: 3px solid var(--color-focus-ring);
+  border-top-color: var(--color-accent-hover);
   animation: import-spin 720ms linear infinite;
 }
 
