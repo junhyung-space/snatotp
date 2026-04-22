@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -524,6 +525,36 @@ describe("popup app", () => {
     expect(entryRow.querySelector(".timer-dot")).not.toBeNull();
     expect(entryRow.querySelector(".timer-badge-calm")).not.toBeNull();
     expect(entryRow.querySelector(".timer-rail")).toBeNull();
+  });
+
+  it("uses a flat popup background and border-defined cards for the otp list", async () => {
+    render(<App copyText={writeText} repository={createRepository([entryA, entryB])} now={() => 0} />);
+
+    await screen.findByRole("button", { name: /Example alice@example.com/i });
+
+    const popupStyles = readFileSync("src/popup/styles.css", "utf8");
+
+    expect(popupStyles).toContain(".popup-shell {\n  box-sizing: border-box;");
+    expect(popupStyles).toContain("background: #f7fafc;");
+    expect(popupStyles).toContain(".entry-list {\n  display: grid;\n  gap: 12px;");
+    expect(popupStyles).toContain("background: #ffffff;");
+    expect(popupStyles).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
+    expect(popupStyles).toContain("box-shadow: none;");
+  });
+
+  it("keeps the more-options menu flat without a floating shadow", async () => {
+    render(<App copyText={writeText} repository={createRepository([entryA, entryB])} now={() => 0} />);
+
+    await screen.findByRole("button", { name: /Example alice@example.com/i });
+
+    const popupStyles = readFileSync("src/popup/styles.css", "utf8");
+    const entryMenuBlock = popupStyles.slice(
+      popupStyles.indexOf(".entry-menu {"),
+      popupStyles.indexOf(".entry-menu button {")
+    );
+
+    expect(entryMenuBlock).toContain("background: #ffffff;");
+    expect(entryMenuBlock).toContain("box-shadow: none;");
   });
 
   it("switches timer badge urgency as the refresh time gets closer", async () => {
