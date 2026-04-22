@@ -589,7 +589,7 @@ describe("popup app", () => {
     expect(popupStyles).toContain(".entry-list {\n  display: grid;\n  gap: 12px;");
     expect(popupStyles).toContain("background: #ffffff;");
     expect(popupStyles).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
-    expect(popupStyles).toContain("box-shadow: none;");
+    expect(popupStyles).not.toContain("box-shadow");
   });
 
   it("keeps the more-options menu flat without a floating shadow", async () => {
@@ -604,7 +604,7 @@ describe("popup app", () => {
     );
 
     expect(entryMenuBlock).toContain("background: #ffffff;");
-    expect(entryMenuBlock).toContain("box-shadow: none;");
+    expect(entryMenuBlock).not.toContain("box-shadow");
   });
 
   it("uses flat dialog surfaces for settings and qr flows", async () => {
@@ -630,10 +630,10 @@ describe("popup app", () => {
     expect(dialogScrimBlock).not.toContain("backdrop-filter");
     expect(entryDialogBlock).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
     expect(entryDialogBlock).toContain("background: #ffffff;");
-    expect(entryDialogBlock).toContain("box-shadow: none;");
+    expect(entryDialogBlock).not.toContain("box-shadow");
     expect(qrCodeButtonBlock).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
     expect(qrCodeButtonBlock).toContain("background: #ffffff;");
-    expect(qrCodeButtonBlock).toContain("box-shadow: none;");
+    expect(qrCodeButtonBlock).not.toContain("box-shadow");
   });
 
   it("keeps popup buttons flat without gradient or shadow treatments", async () => {
@@ -656,10 +656,9 @@ describe("popup app", () => {
     );
 
     expect(popupStyles).not.toContain("linear-gradient");
-    expect(menuButtonHoverBlock).toContain("box-shadow: none;");
-    expect(segmentedActiveBlock).toContain("box-shadow: none;");
-    expect(colorSwatchBlock).toContain("box-shadow: none;");
-    expect(colorSwatchBlock).not.toContain("box-shadow 140ms");
+    expect(menuButtonHoverBlock).not.toContain("box-shadow");
+    expect(segmentedActiveBlock).not.toContain("box-shadow");
+    expect(colorSwatchBlock).not.toContain("box-shadow");
   });
 
   it("switches timer badge urgency as the refresh time gets closer", async () => {

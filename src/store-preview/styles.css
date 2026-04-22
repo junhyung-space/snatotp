@@ -9,10 +9,7 @@ body,
 body {
   margin: 0;
   font-family: "SF Pro Display", "SF Pro Text", "Segoe UI", sans-serif;
-  background:
-    radial-gradient(circle at top left, rgba(88, 147, 255, 0.2), transparent 30%),
-    radial-gradient(circle at bottom right, rgba(90, 170, 210, 0.16), transparent 28%),
-    linear-gradient(180deg, #f7fbff 0%, #eef4fb 100%);
+  background: #f7fafc;
 }
 
 * {
@@ -33,24 +30,10 @@ body {
   grid-template-columns: 0.95fr 1.05fr;
   gap: 24px;
   height: 100%;
+  border: 1px solid rgba(19, 32, 51, 0.08);
   border-radius: 34px;
   padding: 30px;
-  background:
-    linear-gradient(115deg, rgba(255, 255, 255, 0.96) 0%, rgba(247, 250, 255, 0.92) 55%, rgba(228, 237, 255, 0.96) 100%),
-    radial-gradient(circle at 82% 20%, rgba(105, 144, 255, 0.18), transparent 26%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.82),
-    0 28px 64px rgba(16, 24, 40, 0.1);
-}
-
-.store-stage::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(110deg, rgba(255, 255, 255, 0) 8%, rgba(150, 184, 255, 0.08) 58%, rgba(255, 255, 255, 0) 100%),
-    radial-gradient(circle at 88% 12%, rgba(132, 173, 255, 0.22), transparent 18%);
-  pointer-events: none;
+  background: #ffffff;
 }
 
 .store-left {
@@ -72,7 +55,6 @@ body {
   width: 54px;
   height: 54px;
   flex: 0 0 auto;
-  filter: drop-shadow(0 14px 24px rgba(29, 78, 216, 0.18));
 }
 
 .store-brand-copy h2,
@@ -122,7 +104,6 @@ body {
   height: 252px;
   border-radius: 28px;
   background: rgba(232, 239, 255, 0.8);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
   transform: rotate(8deg);
 }
 
@@ -132,9 +113,9 @@ body {
   bottom: 0;
   width: 270px;
   border-radius: 28px;
+  border: 1px solid rgba(19, 32, 51, 0.08);
   padding: 20px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 30px 54px rgba(16, 24, 40, 0.14);
+  background: #ffffff;
 }
 
 .store-stack-header {
@@ -147,7 +128,6 @@ body {
 .store-stack-header .store-logo {
   width: 28px;
   height: 28px;
-  filter: none;
 }
 
 .store-stack-header span {
@@ -219,7 +199,6 @@ body {
   right: 24px;
   bottom: 28px;
   left: 492px;
-  box-shadow: 0 32px 72px rgba(16, 24, 40, 0.16);
 }
 
 .store-settings-shell .settings-shell {
@@ -246,7 +225,6 @@ body {
   left: 404px;
   bottom: 118px;
   width: 304px;
-  box-shadow: 0 24px 60px rgba(16, 24, 40, 0.2);
 }
 
 .store-popup-shell .popup-shell {

@@ -1,8 +1,6 @@
 :root {
   color: #132033;
-  background:
-    radial-gradient(circle at top right, rgba(73, 130, 255, 0.16), transparent 28%),
-    linear-gradient(180deg, #f8fafc 0%, #eef3f9 100%);
+  background: #f7fafc;
   font-family: "SF Pro Display", "SF Pro Text", "Segoe UI", sans-serif;
 }
 
@@ -22,11 +20,9 @@ body {
 .capture-header,
 .capture-stage-panel,
 .capture-footer {
+  border: 1px solid rgba(19, 32, 51, 0.08);
   border-radius: 28px;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.72),
-    0 24px 60px rgba(16, 24, 40, 0.1);
+  background: #ffffff;
 }
 
 .capture-header {
@@ -96,9 +92,6 @@ body {
   border: 2px solid #3a78ff;
   border-radius: 20px;
   background: rgba(58, 120, 255, 0.22);
-  box-shadow:
-    0 0 0 2px #f8fbff,
-    0 0 0 9999px rgba(15, 23, 42, 0.3);
   pointer-events: none;
 }
 
@@ -148,13 +141,11 @@ body {
 }
 
 .capture-primary {
-  background: linear-gradient(180deg, #255df6 0%, #1948c9 100%);
+  background: #1f5fe8;
   color: white;
-  box-shadow: 0 16px 36px rgba(37, 93, 246, 0.28);
 }
 
 .capture-primary:disabled {
   cursor: not-allowed;
   opacity: 0.55;
-  box-shadow: none;
 }
