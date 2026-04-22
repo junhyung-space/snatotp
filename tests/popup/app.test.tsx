@@ -575,6 +575,21 @@ describe("popup app", () => {
     expect(await screen.findByLabelText("--@GitHub-HMG color marker")).toHaveTextContent("G");
     expect(screen.getByLabelText("--- color marker")).toHaveTextContent("7");
     expect(screen.getByLabelText("!!! color marker")).toHaveTextContent("");
+
+    const popupStyles = readFileSync("src/popup/styles.css", "utf8");
+    const markerBlock = popupStyles.slice(
+      popupStyles.indexOf(".entry-marker {"),
+      popupStyles.indexOf(".density-compact .entry-marker {")
+    );
+    const compactMarkerBlock = popupStyles.slice(
+      popupStyles.indexOf(".density-compact .entry-marker {"),
+      popupStyles.indexOf(".color-grid {")
+    );
+
+    expect(markerBlock).toContain("font-size: 10px;");
+    expect(markerBlock).toContain("font-weight: 800;");
+    expect(markerBlock).toContain("letter-spacing: 0;");
+    expect(compactMarkerBlock).toContain("font-size: 9px;");
   });
 
   it("uses a flat popup background and border-defined cards for the otp list", async () => {

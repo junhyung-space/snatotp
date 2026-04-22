@@ -888,16 +888,16 @@ body {
   place-items: center;
   border: 1px solid rgba(19, 32, 51, 0.08);
   border-radius: 999px;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0;
 }
 
 .density-compact .entry-marker {
   width: 22px;
   height: 22px;
   flex-basis: 22px;
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .color-grid {
