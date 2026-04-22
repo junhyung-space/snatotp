@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Snap OTP",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "OTP authenticator for Chrome with QR import, capture, sync, and optional passphrase protection.",
   "icons": {
     "16": "assets/snapotp-icon-16.png",
