@@ -1,9 +1,7 @@
 :root {
   color: #132033;
   font-family: "SF Pro Display", "SF Pro Text", "Segoe UI", sans-serif;
-  background:
-    radial-gradient(circle at top right, rgba(73, 130, 255, 0.12), transparent 24%),
-    linear-gradient(180deg, #f8fafc 0%, #eef3f9 100%);
+  background: #f7fafc;
 }
 
 body {
@@ -14,9 +12,7 @@ body {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 240px minmax(0, 1fr);
-  background:
-    radial-gradient(circle at top right, rgba(73, 130, 255, 0.12), transparent 24%),
-    linear-gradient(180deg, #f8fafc 0%, #eef3f9 100%);
+  background: #f7fafc;
 }
 
 .settings-loading,
@@ -32,8 +28,7 @@ body {
   gap: 24px;
   padding: 28px 20px;
   border-right: 1px solid rgba(94, 113, 140, 0.12);
-  background: rgba(244, 248, 252, 0.9);
-  backdrop-filter: blur(18px);
+  background: #f7fafc;
 }
 
 .settings-sidebar-header,
@@ -94,11 +89,8 @@ body {
 }
 
 .settings-nav-button.active {
-  background: rgba(255, 255, 255, 0.92);
+  background: #ffffff;
   color: #183557;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.76),
-    0 12px 24px rgba(16, 24, 40, 0.08);
 }
 
 .settings-content {
@@ -120,10 +112,8 @@ body {
   display: grid;
   gap: 0;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.74),
-    0 24px 60px rgba(16, 24, 40, 0.1);
+  border: 1px solid rgba(19, 32, 51, 0.08);
+  background: #ffffff;
   overflow: hidden;
 }
 
@@ -157,7 +147,7 @@ body {
   display: grid;
   gap: 12px;
   padding: 22px;
-  background: rgba(255, 255, 255, 0.9);
+  background: #ffffff;
 }
 
 .settings-row {
@@ -225,9 +215,7 @@ body {
 
 .settings-form-card {
   border-radius: 24px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.74),
-    0 24px 60px rgba(16, 24, 40, 0.1);
+  border: 1px solid rgba(19, 32, 51, 0.08);
 }
 
 .settings-form-card-danger {
@@ -268,7 +256,6 @@ body {
 .settings-chip.active {
   background: #1f5fe8;
   color: white;
-  box-shadow: 0 10px 22px rgba(31, 95, 232, 0.22);
 }
 
 .settings-primary-button,
@@ -366,9 +353,7 @@ body {
 .settings-locked-panel {
   width: min(460px, 100%);
   border-radius: 24px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.74),
-    0 24px 60px rgba(16, 24, 40, 0.1);
+  border: 1px solid rgba(19, 32, 51, 0.08);
 }
 
 .settings-dialog-backdrop {
@@ -377,8 +362,7 @@ body {
   display: grid;
   place-items: center;
   padding: 24px;
-  background: rgba(15, 23, 42, 0.3);
-  backdrop-filter: blur(6px);
+  background: rgba(247, 250, 252, 0.92);
 }
 
 .settings-dialog {
@@ -387,10 +371,8 @@ body {
   gap: 14px;
   padding: 24px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.74),
-    0 24px 60px rgba(16, 24, 40, 0.18);
+  border: 1px solid rgba(19, 32, 51, 0.08);
+  background: #ffffff;
 }
 
 .settings-dialog h2 {

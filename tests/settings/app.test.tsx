@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
@@ -197,5 +198,25 @@ describe("settings app", () => {
     await waitFor(() => {
       expect(deleteAll).toHaveBeenCalledTimes(1);
     });
+  });
+
+  it("uses flat settings surfaces without gradients or shadows", async () => {
+    render(
+      <SettingsApp
+        preferencesRepository={createPreferencesRepository()}
+        repository={createRepository()}
+      />
+    );
+
+    expect(await screen.findByRole("navigation", { name: "Settings sections" })).toBeInTheDocument();
+
+    const settingsStyles = readFileSync("src/settings/styles.css", "utf8");
+
+    expect(settingsStyles).not.toContain("linear-gradient");
+    expect(settingsStyles).not.toContain("radial-gradient");
+    expect(settingsStyles).not.toContain("backdrop-filter");
+    expect(settingsStyles).not.toContain("box-shadow:");
+    expect(settingsStyles).toContain("background: #f7fafc;");
+    expect(settingsStyles).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
   });
 });

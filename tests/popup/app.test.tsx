@@ -557,6 +557,61 @@ describe("popup app", () => {
     expect(entryMenuBlock).toContain("box-shadow: none;");
   });
 
+  it("uses flat dialog surfaces for settings and qr flows", async () => {
+    render(<App copyText={writeText} repository={createRepository([entryA, entryB])} now={() => 0} />);
+
+    await screen.findByRole("button", { name: /Example alice@example.com/i });
+
+    const popupStyles = readFileSync("src/popup/styles.css", "utf8");
+    const dialogScrimBlock = popupStyles.slice(
+      popupStyles.indexOf(".dialog-scrim {"),
+      popupStyles.indexOf(".entry-dialog {")
+    );
+    const entryDialogBlock = popupStyles.slice(
+      popupStyles.indexOf(".entry-dialog {"),
+      popupStyles.indexOf(".entry-dialog h2,")
+    );
+    const qrCodeButtonBlock = popupStyles.slice(
+      popupStyles.indexOf(".qr-code-button {"),
+      popupStyles.indexOf(".qr-code-button:hover {")
+    );
+
+    expect(dialogScrimBlock).toContain("background: rgba(247, 250, 252, 0.92);");
+    expect(dialogScrimBlock).not.toContain("backdrop-filter");
+    expect(entryDialogBlock).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
+    expect(entryDialogBlock).toContain("background: #ffffff;");
+    expect(entryDialogBlock).toContain("box-shadow: none;");
+    expect(qrCodeButtonBlock).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
+    expect(qrCodeButtonBlock).toContain("background: #ffffff;");
+    expect(qrCodeButtonBlock).toContain("box-shadow: none;");
+  });
+
+  it("keeps popup buttons flat without gradient or shadow treatments", async () => {
+    render(<App copyText={writeText} repository={createRepository([entryA, entryB])} now={() => 0} />);
+
+    await screen.findByRole("button", { name: /Example alice@example.com/i });
+
+    const popupStyles = readFileSync("src/popup/styles.css", "utf8");
+    const menuButtonHoverBlock = popupStyles.slice(
+      popupStyles.indexOf(".menu-button:hover,"),
+      popupStyles.indexOf(".entry-menu {")
+    );
+    const segmentedActiveBlock = popupStyles.slice(
+      popupStyles.indexOf(".segmented-button.active {"),
+      popupStyles.indexOf(".danger-zone {")
+    );
+    const colorSwatchBlock = popupStyles.slice(
+      popupStyles.indexOf(".color-swatch {"),
+      popupStyles.indexOf(".color-swatch.selected {")
+    );
+
+    expect(popupStyles).not.toContain("linear-gradient");
+    expect(menuButtonHoverBlock).toContain("box-shadow: none;");
+    expect(segmentedActiveBlock).toContain("box-shadow: none;");
+    expect(colorSwatchBlock).toContain("box-shadow: none;");
+    expect(colorSwatchBlock).not.toContain("box-shadow 140ms");
+  });
+
   it("switches timer badge urgency as the refresh time gets closer", async () => {
     const { rerender } = render(<App copyText={writeText} repository={createRepository()} now={() => 11_000} />);
 
