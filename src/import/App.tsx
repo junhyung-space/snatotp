@@ -109,8 +109,6 @@ export function ImportSection({
   const [message, setMessage] = useState<FeedbackMessage | null>(null);
   const [busy, setBusy] = useState(false);
   const [dragActive, setDragActive] = useState(false);
-  const pastedOtpLinks = getPastedOtpLinks(otpUrl);
-  const hasMultiplePastedLinks = pastedOtpLinks.length > 1;
 
   async function importOtpUri(otpUri: string, sourceType: SourceType) {
     if (busy) {
@@ -310,7 +308,7 @@ export function ImportSection({
                 aria-label="Authentication links"
                 className="url-input"
                 id="otp-url-input"
-                placeholder="Paste one or more authentication links, one per line"
+                placeholder={"Paste one link per line\notpauth://...Example 1\notpauth://...Example 2"}
                 value={otpUrl}
                 disabled={busy}
                 onChange={(event) => {
@@ -320,7 +318,7 @@ export function ImportSection({
               />
               <div className="url-form-actions">
                 <button className="url-submit" type="submit" disabled={busy}>
-                  {busy ? "Adding..." : hasMultiplePastedLinks ? "Add accounts" : "Add account"}
+                  {busy ? "Adding..." : "Add accounts"}
                 </button>
               </div>
             </form>

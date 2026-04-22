@@ -87,8 +87,11 @@ describe("import section", () => {
     await user.click(screen.getByRole("tab", { name: "Link" }));
 
     expect(screen.getByRole("tab", { name: "Link" })).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByRole("textbox", { name: "Authentication links" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Add account" })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "Authentication links" })).toHaveAttribute(
+      "placeholder",
+      "Paste one link per line\notpauth://...Example 1\notpauth://...Example 2"
+    );
+    expect(screen.getByRole("button", { name: "Add accounts" })).toBeInTheDocument();
   });
 
   it("shows a local success message after a successful QR upload", async () => {
@@ -207,7 +210,7 @@ describe("import section", () => {
 
     await user.click(screen.getByRole("tab", { name: "Link" }));
     await user.type(screen.getByRole("textbox", { name: "Authentication links" }), otpUrl);
-    await user.click(screen.getByRole("button", { name: "Add account" }));
+    await user.click(screen.getByRole("button", { name: "Add accounts" }));
 
     await waitFor(() => {
       expect(save).toHaveBeenCalledTimes(1);
@@ -316,7 +319,7 @@ describe("import section", () => {
 
     await user.click(screen.getByRole("tab", { name: "Link" }));
     await user.type(screen.getByRole("textbox", { name: "Authentication links" }), otpUrl);
-    await user.click(screen.getByRole("button", { name: "Add account" }));
+    await user.click(screen.getByRole("button", { name: "Add accounts" }));
 
     expect(await screen.findByText("Already added: Test1")).toBeInTheDocument();
   });
@@ -328,7 +331,7 @@ describe("import section", () => {
 
     await user.click(screen.getByRole("tab", { name: "Link" }));
     await user.type(screen.getByRole("textbox", { name: "Authentication links" }), "https://example.com");
-    await user.click(screen.getByRole("button", { name: "Add account" }));
+    await user.click(screen.getByRole("button", { name: "Add accounts" }));
     expect(await screen.findByText("Paste a valid authentication link")).toBeInTheDocument();
 
     await user.type(screen.getByRole("textbox", { name: "Authentication links" }), "x");
