@@ -1,7 +1,9 @@
+@import "../styles/tokens.css";
+
 :root {
-  color: #132033;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  background: #f7fafc;
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  background: var(--color-bg-page);
 }
 
 body {
@@ -12,7 +14,7 @@ body {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 240px minmax(0, 1fr);
-  background: #f7fafc;
+  background: var(--color-bg-page);
 }
 
 .settings-loading,
@@ -25,10 +27,10 @@ body {
 .settings-sidebar {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: 24px;
-  padding: 28px 20px;
-  border-right: 1px solid rgba(94, 113, 140, 0.12);
-  background: #f7fafc;
+  gap: var(--space-10);
+  padding: var(--space-11) 20px;
+  border-right: 1px solid var(--color-border-divider);
+  background: var(--color-bg-page);
 }
 
 .settings-sidebar-header,
@@ -44,7 +46,7 @@ body {
 
 .settings-kicker {
   color: #5b78ae;
-  font-size: 11px;
+  font-size: var(--font-size-label);
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -52,18 +54,18 @@ body {
 
 .settings-sidebar-header {
   display: grid;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .settings-sidebar-header h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: var(--font-size-display);
   letter-spacing: -0.05em;
 }
 
 .settings-nav {
   display: grid;
-  gap: 8px;
+  gap: var(--space-3);
   align-content: start;
 }
 
@@ -80,29 +82,29 @@ body {
 
 .settings-nav-button {
   padding: 12px 14px;
-  border-radius: 16px;
+  border-radius: var(--radius-card);
   background: transparent;
-  color: #5f7087;
+  color: var(--color-text-muted);
   font-size: 14px;
   font-weight: 700;
   text-align: left;
 }
 
 .settings-nav-button.active {
-  background: #ffffff;
-  color: #183557;
+  background: var(--color-surface);
+  color: var(--color-text-strong);
 }
 
 .settings-content {
   display: grid;
   align-content: start;
-  gap: 18px;
-  padding: 28px;
+  gap: var(--space-8);
+  padding: var(--space-11);
 }
 
 .settings-section {
   display: grid;
-  gap: 18px;
+  gap: var(--space-8);
 }
 
 .settings-list {
@@ -111,15 +113,15 @@ body {
   padding: 0;
   display: grid;
   gap: 0;
-  border-radius: 24px;
-  border: 1px solid rgba(19, 32, 51, 0.08);
-  background: #ffffff;
+  border-radius: var(--radius-panel);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
   overflow: hidden;
 }
 
 .settings-section-header {
   display: grid;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .settings-section-header h2 {
@@ -129,14 +131,14 @@ body {
 }
 
 .settings-section-header p {
-  color: #66788f;
+  color: var(--color-text-muted);
   font-size: 15px;
   line-height: 1.5;
 }
 
 .settings-meta-text {
   margin: 2px 0 0;
-  color: #7a8aa0;
+  color: var(--color-text-subtle);
   font-size: 13px;
   font-weight: 600;
 }
@@ -145,16 +147,16 @@ body {
 .settings-form-card,
 .settings-locked-panel {
   display: grid;
-  gap: 12px;
-  padding: 22px;
-  background: #ffffff;
+  gap: var(--space-5);
+  padding: var(--space-9);
+  background: var(--color-surface);
 }
 
 .settings-row {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   column-gap: 20px;
-  border-bottom: 1px solid rgba(94, 113, 140, 0.12);
+  border-bottom: 1px solid var(--color-border-divider);
 }
 
 .settings-row-linkable {
@@ -171,12 +173,12 @@ body {
 
 .settings-row-copy {
   display: grid;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 .settings-row h3,
 .settings-form-card h3 {
-  color: #17304e;
+  color: var(--color-text-strong);
   font-size: 18px;
   letter-spacing: -0.03em;
 }
@@ -184,7 +186,7 @@ body {
 .settings-row p,
 .settings-form-card p,
 .settings-copy {
-  color: #66788f;
+  color: var(--color-text-muted);
   font-size: 14px;
   line-height: 1.55;
 }
@@ -192,14 +194,14 @@ body {
 .settings-row-actions {
   display: grid;
   justify-items: end;
-  gap: 10px;
+  gap: var(--space-4);
   min-width: min(100%, 360px);
 }
 
 .settings-row-link {
   display: grid;
   width: 100%;
-  padding: 22px;
+  padding: var(--space-9);
   color: inherit;
   text-decoration: none;
 }
@@ -210,12 +212,12 @@ body {
 
 .settings-form-panel {
   display: grid;
-  gap: 16px;
+  gap: var(--space-7);
 }
 
 .settings-form-card {
-  border-radius: 24px;
-  border: 1px solid rgba(19, 32, 51, 0.08);
+  border-radius: var(--radius-panel);
+  border: 1px solid var(--color-border-subtle);
 }
 
 .settings-form-card-danger {
@@ -225,36 +227,36 @@ body {
 .settings-status-pill {
   justify-self: start;
   padding: 7px 11px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: #dce7ff;
   color: #1e4ea8;
-  font-size: 12px;
+  font-size: var(--font-size-body);
   font-weight: 700;
 }
 
 .settings-status-pill.protected {
   background: #e5f4eb;
-  color: #146c43;
+  color: var(--color-success);
 }
 
 .settings-segmented-row,
 .settings-button-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--space-4);
 }
 
 .settings-chip {
   padding: 8px 12px;
-  border-radius: 999px;
-  background: #edf3fb;
-  color: #53677f;
-  font-size: 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-hover);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body);
   font-weight: 700;
 }
 
 .settings-chip.active {
-  background: #1f5fe8;
+  background: var(--color-accent);
   color: white;
 }
 
@@ -265,23 +267,23 @@ body {
   justify-self: start;
   padding: 10px 14px;
   border-radius: 14px;
-  font-size: 13px;
+  font-size: var(--font-size-body-lg);
   font-weight: 700;
 }
 
 .settings-primary-button {
-  background: #1f5fe8;
+  background: var(--color-accent);
   color: white;
 }
 
 .settings-secondary-button {
-  background: #edf3fb;
-  color: #4f6179;
+  background: var(--color-surface-hover);
+  color: var(--color-text-secondary);
 }
 
 .settings-warning-button {
-  background: #fff4df;
-  color: #9a5b10;
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
 }
 
 .settings-danger-button {
@@ -300,49 +302,49 @@ body {
 .settings-form,
 .settings-form-grid {
   display: grid;
-  gap: 14px;
+  gap: var(--space-6);
 }
 
 .settings-field {
   display: grid;
-  gap: 8px;
+  gap: var(--space-3);
 }
 
 .settings-field span {
-  color: #4f6179;
-  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body);
   font-weight: 700;
 }
 
 .settings-field input {
-  border: 1px solid rgba(94, 113, 140, 0.18);
-  border-radius: 16px;
+  border: 1px solid var(--color-border-divider);
+  border-radius: var(--radius-card);
   padding: 11px 13px;
-  background: rgba(248, 251, 255, 0.92);
-  color: #132033;
+  background: var(--color-surface-subtle);
+  color: var(--color-text-primary);
   font: inherit;
 }
 
 .settings-inline-message {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--font-size-body-lg);
   font-weight: 700;
   padding: 10px 12px;
   border-radius: 14px;
 }
 
 .settings-inline-message.success {
-  background: #e8f7ef;
-  color: #146c43;
+  background: var(--color-success-soft);
+  color: var(--color-success);
 }
 
 .settings-inline-message.warning {
-  background: #fff4df;
-  color: #9a5b10;
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
 }
 
 .settings-inline-message.error {
-  background: #fef2f2;
+  background: var(--color-danger-soft);
   color: #991b1b;
 }
 
@@ -352,8 +354,8 @@ body {
 
 .settings-locked-panel {
   width: min(460px, 100%);
-  border-radius: 24px;
-  border: 1px solid rgba(19, 32, 51, 0.08);
+  border-radius: var(--radius-panel);
+  border: 1px solid var(--color-border-subtle);
 }
 
 .settings-dialog-backdrop {
@@ -370,15 +372,15 @@ body {
   display: grid;
   gap: 14px;
   padding: 24px;
-  border-radius: 24px;
-  border: 1px solid rgba(19, 32, 51, 0.08);
-  background: #ffffff;
+  border-radius: var(--radius-panel);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
 }
 
 .settings-dialog h2 {
   margin: 0;
-  color: #17304e;
-  font-size: 28px;
+  color: var(--color-text-strong);
+  font-size: var(--font-size-display);
   letter-spacing: -0.05em;
 }
 
@@ -389,7 +391,7 @@ body {
 
   .settings-sidebar {
     border-right: 0;
-    border-bottom: 1px solid rgba(94, 113, 140, 0.12);
+    border-bottom: 1px solid var(--color-border-divider);
   }
 
   .settings-row {

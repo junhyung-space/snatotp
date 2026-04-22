@@ -1,0 +1,68 @@
+:root {
+  --font-ui: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-code: "SF Mono", "Menlo", "Monaco", monospace;
+
+  --color-bg-app: #f3f6fa;
+  --color-bg-page: #f7fafc;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f8fbff;
+  --color-surface-raised: #f9fbfd;
+  --color-surface-hover: #edf3fb;
+  --color-surface-active: #dbe8f8;
+
+  --color-border-subtle: rgba(19, 32, 51, 0.08);
+  --color-border-card: rgba(19, 32, 51, 0.12);
+  --color-border-control: rgba(91, 106, 127, 0.22);
+  --color-border-divider: rgba(94, 113, 140, 0.12);
+
+  --color-text-primary: #132033;
+  --color-text-strong: #17304e;
+  --color-text-secondary: #4f6179;
+  --color-text-muted: #66788f;
+  --color-text-subtle: #71839d;
+
+  --color-accent: #1f5fe8;
+  --color-accent-strong: #1f4db3;
+  --color-accent-soft: #eef4ff;
+  --color-accent-hover: #2f6fed;
+
+  --color-success: #146c43;
+  --color-success-soft: #ecfdf5;
+  --color-warning: #9a5b10;
+  --color-warning-soft: #fff4df;
+  --color-danger: #b42318;
+  --color-danger-soft: #fef2f2;
+
+  --space-1: 4px;
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 10px;
+  --space-5: 12px;
+  --space-6: 14px;
+  --space-7: 16px;
+  --space-8: 18px;
+  --space-9: 22px;
+  --space-10: 24px;
+  --space-11: 28px;
+
+  --radius-control: 12px;
+  --radius-card: 16px;
+  --radius-panel: 24px;
+  --radius-dialog: 22px;
+  --radius-page: 28px;
+  --radius-pill: 999px;
+  --radius-round: 50%;
+
+  --font-size-micro: 9px;
+  --font-size-caption: 10px;
+  --font-size-label: 11px;
+  --font-size-body: 12px;
+  --font-size-body-lg: 13px;
+  --font-size-title: 17px;
+  --font-size-display: 28px;
+  --font-size-code: 17px;
+
+  --otp-card-height: 60px;
+  --otp-card-height-compact: 56px;
+  --otp-card-gap: 6px;
+}

@@ -1,13 +1,15 @@
+@import "../styles/tokens.css";
+
 .import-panel {
   position: relative;
   width: min(100%, 520px);
   box-sizing: border-box;
   display: grid;
-  gap: 12px;
-  padding: 22px;
-  border: 1px solid rgba(19, 32, 51, 0.08);
-  border-radius: 28px;
-  background: #ffffff;
+  gap: var(--space-5);
+  padding: var(--space-9);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-page);
+  background: var(--color-surface);
 }
 
 .embedded-import-panel {
@@ -20,11 +22,11 @@
 .import-message,
 .url-label {
   margin: 0;
-  color: #62738b;
+  color: var(--color-text-muted);
 }
 
 .import-eyebrow {
-  font-size: 11px;
+  font-size: var(--font-size-label);
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -33,7 +35,7 @@
 .import-panel h1,
 .import-panel h2 {
   margin: 0;
-  font-size: 28px;
+  font-size: var(--font-size-display);
   letter-spacing: -0.04em;
 }
 
@@ -45,19 +47,19 @@
 .import-tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  padding: 4px;
-  border: 1px solid rgba(19, 32, 51, 0.08);
-  border-radius: 16px;
-  background: #edf3fb;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-hover);
 }
 
 .import-tab {
   border: 0;
-  border-radius: 12px;
+  border-radius: var(--radius-control);
   padding: 9px 10px;
   background: transparent;
-  color: #66788f;
+  color: var(--color-text-muted);
   font: inherit;
   font-size: 13px;
   font-weight: 700;
@@ -73,8 +75,8 @@
 }
 
 .import-tab.active {
-  background: #ffffff;
-  color: #183557;
+  background: var(--color-surface);
+  color: var(--color-text-strong);
 }
 
 .import-panel [role="tabpanel"] {
@@ -92,12 +94,12 @@
   box-sizing: border-box;
   border: 2px dashed rgba(171, 191, 222, 0.92);
   display: grid;
-  gap: 10px;
+  gap: var(--space-4);
   justify-items: center;
   align-content: center;
   padding: 22px 20px 24px;
-  border-radius: 24px;
-  background: #f8fbff;
+  border-radius: var(--radius-panel);
+  background: var(--color-surface-subtle);
   cursor: pointer;
   text-align: center;
   transition:
@@ -123,7 +125,7 @@
 
 .import-dropzone strong {
   font-size: 18px;
-  color: #19304f;
+  color: var(--color-text-strong);
   letter-spacing: -0.03em;
 }
 
@@ -157,24 +159,24 @@
 }
 
 .import-message.success {
-  background: #e8f7ef;
-  color: #146c43;
+  background: var(--color-success-soft);
+  color: var(--color-success);
 }
 
 .import-message.warning {
-  background: #fff4df;
-  color: #9a5b10;
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
 }
 
 .import-message.error {
-  background: #fef2f2;
+  background: var(--color-danger-soft);
   color: #991b1b;
 }
 
 .url-form {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: 8px;
+  gap: var(--space-3);
   height: 100%;
 }
 
@@ -193,11 +195,11 @@
   height: 100%;
   box-sizing: border-box;
   resize: none;
-  border: 1px solid rgba(94, 113, 140, 0.18);
+  border: 1px solid var(--color-border-divider);
   border-radius: 18px;
   padding: 10px 12px;
-  background: rgba(248, 251, 255, 0.92);
-  color: #132033;
+  background: var(--color-surface-subtle);
+  color: var(--color-text-primary);
   font: inherit;
   font-size: 13px;
   line-height: 1.45;
@@ -213,7 +215,7 @@
   border-radius: 14px;
   padding: 10px 14px;
   min-width: 120px;
-  background: #1f5fe8;
+  background: var(--color-accent);
   color: white;
   font: inherit;
   font-size: 13px;
@@ -252,7 +254,7 @@
 }
 
 .import-busy-overlay span:last-child {
-  color: #62738b;
+  color: var(--color-text-muted);
   font-size: 13px;
   line-height: 1.5;
   max-width: 240px;

@@ -216,7 +216,7 @@ describe("settings app", () => {
     expect(settingsStyles).not.toContain("radial-gradient");
     expect(settingsStyles).not.toContain("backdrop-filter");
     expect(settingsStyles).not.toContain("box-shadow:");
-    expect(settingsStyles).toContain("background: #f7fafc;");
-    expect(settingsStyles).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
+    expect(settingsStyles).toContain("background: var(--color-bg-page);");
+    expect(settingsStyles).toContain("border: 1px solid var(--color-border-subtle);");
   });
 });

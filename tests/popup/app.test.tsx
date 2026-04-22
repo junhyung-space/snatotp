@@ -252,10 +252,10 @@ describe("popup app", () => {
     const popupStyles = readFileSync("src/popup/styles.css", "utf8");
     expect(popupStyles).toContain(".popup-title {\n  display: flex;\n  align-items: center;");
     expect(popupStyles).toContain(".popup-header {\n  display: flex;\n  align-items: center;");
-    expect(popupStyles).toContain(".action-row {\n  display: flex;\n  gap: 6px;\n  padding-top: 0;");
+    expect(popupStyles).toContain(".action-row {\n  display: flex;\n  gap: var(--space-2);\n  padding-top: 0;");
     expect(popupStyles).toContain(".icon-button {\n  width: 36px;\n  height: 36px;");
-    expect(popupStyles).toContain("  border: 1px solid rgba(19, 32, 51, 0.08);");
-    expect(popupStyles).toContain("  background: #ffffff;");
+    expect(popupStyles).toContain("  border: 1px solid var(--color-border-subtle);");
+    expect(popupStyles).toContain("  background: var(--color-surface);");
     expect(popupStyles).not.toContain("transform: scale(1.08);");
     expect(popupStyles).toContain(".action-icon {\n  width: 18px;\n  height: 18px;");
   });
@@ -586,10 +586,10 @@ describe("popup app", () => {
       popupStyles.indexOf(".color-grid {")
     );
 
-    expect(markerBlock).toContain("font-size: 10px;");
+    expect(markerBlock).toContain("font-size: var(--font-size-caption);");
     expect(markerBlock).toContain("font-weight: 800;");
     expect(markerBlock).toContain("letter-spacing: 0;");
-    expect(compactMarkerBlock).toContain("font-size: 9px;");
+    expect(compactMarkerBlock).toContain("font-size: var(--font-size-micro);");
   });
 
   it("uses a flat popup background and border-defined cards for the otp list", async () => {
@@ -598,17 +598,27 @@ describe("popup app", () => {
     await screen.findByRole("button", { name: /Example alice@example.com/i });
 
     const popupStyles = readFileSync("src/popup/styles.css", "utf8");
+    const popupShellBlock = popupStyles.slice(
+      popupStyles.indexOf(".popup-shell {"),
+      popupStyles.indexOf(".locked-shell {")
+    );
+    const entryRowBlock = popupStyles.slice(
+      popupStyles.indexOf("\n.entry-row {") + 1,
+      popupStyles.indexOf(".density-compact .entry-row {")
+    );
 
     expect(popupStyles).toContain(".popup-shell {\n  box-sizing: border-box;");
-    expect(popupStyles).toContain("max-height: 600px;");
-    expect(popupStyles).toContain("background: #f7fafc;");
-    expect(popupStyles).toContain(".entry-list {\n  display: grid;\n  gap: 6px;");
-    expect(popupStyles).toContain("max-height: calc((60px * 8) + (6px * 7));");
+    expect(popupShellBlock).toContain("max-height: 600px;");
+    expect(popupShellBlock).toContain("background: var(--color-bg-app);");
+    expect(popupStyles).toContain(".entry-list {\n  display: grid;\n  gap: var(--otp-card-gap);");
+    expect(popupStyles).toContain("max-height: calc((var(--otp-card-height) * 8) + (var(--otp-card-gap) * 7));");
     expect(popupStyles).toContain("overflow-y: auto;");
-    expect(popupStyles).toContain(".density-compact .entry-list {\n  max-height: calc((56px * 8) + (6px * 7));");
-    expect(popupStyles).toContain("min-height: 60px;");
-    expect(popupStyles).toContain("background: #ffffff;");
-    expect(popupStyles).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
+    expect(popupStyles).toContain(
+      ".density-compact .entry-list {\n  max-height: calc((var(--otp-card-height-compact) * 8) + (var(--otp-card-gap) * 7));"
+    );
+    expect(entryRowBlock).toContain("min-height: var(--otp-card-height);");
+    expect(entryRowBlock).toContain("background: var(--color-surface);");
+    expect(entryRowBlock).toContain("border: 1px solid var(--color-border-card);");
     expect(popupStyles).not.toContain("box-shadow");
   });
 
@@ -623,7 +633,7 @@ describe("popup app", () => {
       popupStyles.indexOf(".entry-menu button {")
     );
 
-    expect(entryMenuBlock).toContain("background: #ffffff;");
+    expect(entryMenuBlock).toContain("background: var(--color-surface);");
     expect(entryMenuBlock).not.toContain("box-shadow");
   });
 
@@ -648,11 +658,11 @@ describe("popup app", () => {
 
     expect(dialogScrimBlock).toContain("background: rgba(247, 250, 252, 0.92);");
     expect(dialogScrimBlock).not.toContain("backdrop-filter");
-    expect(entryDialogBlock).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
-    expect(entryDialogBlock).toContain("background: #ffffff;");
+    expect(entryDialogBlock).toContain("border: 1px solid var(--color-border-subtle);");
+    expect(entryDialogBlock).toContain("background: var(--color-surface);");
     expect(entryDialogBlock).not.toContain("box-shadow");
-    expect(qrCodeButtonBlock).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
-    expect(qrCodeButtonBlock).toContain("background: #ffffff;");
+    expect(qrCodeButtonBlock).toContain("border: 1px solid var(--color-border-subtle);");
+    expect(qrCodeButtonBlock).toContain("background: var(--color-surface);");
     expect(qrCodeButtonBlock).not.toContain("box-shadow");
   });
 
