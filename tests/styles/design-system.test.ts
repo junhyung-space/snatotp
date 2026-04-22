@@ -80,6 +80,13 @@ describe("design system tokens", () => {
     for (const token of requiredTokens) {
       expect(tokenSource).toContain(`${token}:`);
     }
+
+    expect(tokenSource).toContain("--otp-card-height: 64px;");
+    expect(tokenSource).toContain("--otp-card-height-compact: 60px;");
+    expect(tokenSource).toContain("--otp-card-padding-y: 9px;");
+    expect(tokenSource).toContain("--otp-card-padding-y-compact: 7px;");
+    expect(tokenSource).toContain("--otp-marker-size: 26px;");
+    expect(tokenSource).toContain("--otp-marker-size-compact: 24px;");
   });
 
   it("connects every app stylesheet to the shared token file", () => {

@@ -92,19 +92,19 @@
   --font-size-display-xl: 32px;
   --font-size-code: 17px;
 
-  --otp-card-height: 60px;
-  --otp-card-height-compact: 56px;
+  --otp-card-height: 64px;
+  --otp-card-height-compact: 60px;
   --otp-card-gap: 6px;
-  --otp-card-padding-y: 7px;
+  --otp-card-padding-y: 9px;
   --otp-card-padding-x: 10px;
-  --otp-card-padding-y-compact: 6px;
+  --otp-card-padding-y-compact: 7px;
   --otp-card-row-gap: 4px;
   --otp-card-column-gap: 6px;
   --otp-card-code-row-offset: 32px;
   --otp-card-code-row-offset-compact: 30px;
   --otp-code-size-compact: 16px;
-  --otp-marker-size: 24px;
-  --otp-marker-size-compact: 22px;
+  --otp-marker-size: 26px;
+  --otp-marker-size-compact: 24px;
   --otp-marker-font-size: 10px;
   --otp-marker-font-size-compact: 9px;
 }
