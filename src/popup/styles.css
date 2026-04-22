@@ -12,7 +12,7 @@ body {
   box-sizing: border-box;
   width: 376px;
   min-height: 324px;
-  max-height: 730px;
+  max-height: 600px;
   padding: 14px 14px 12px;
   position: relative;
   display: grid;
@@ -112,12 +112,17 @@ body {
 
 .entry-list {
   display: grid;
-  gap: 12px;
+  gap: 6px;
   align-content: start;
+  max-height: calc((60px * 8) + (6px * 7));
   min-height: 0;
   overflow-y: auto;
   padding-right: 2px;
   position: relative;
+}
+
+.density-compact .entry-list {
+  max-height: calc((56px * 8) + (6px * 7));
 }
 
 .locked-panel {
@@ -190,30 +195,30 @@ body {
 }
 
 .entry-row {
-  min-height: 78px;
-  padding: 12px 12px 10px;
-  border-radius: 18px;
+  min-height: 60px;
+  padding: 7px 10px;
+  border-radius: 16px;
   border: 1px solid rgba(19, 32, 51, 0.08);
   background: #ffffff;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  row-gap: 8px;
-  column-gap: 8px;
+  row-gap: 4px;
+  column-gap: 6px;
   align-items: center;
   width: 100%;
   box-sizing: border-box;
 }
 
 .density-compact .entry-row {
-  min-height: 72px;
-  padding: 10px 10px 8px;
+  min-height: 56px;
+  padding: 6px 10px;
 }
 
 .entry-identity {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   min-width: 0;
   border: 0;
   background: transparent;
@@ -228,8 +233,8 @@ body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
-  padding: 0 0 0 38px;
+  gap: 8px;
+  padding: 0 0 0 32px;
   min-width: 0;
   border: 0;
   background: transparent;
@@ -239,7 +244,7 @@ body {
 }
 
 .density-compact .entry-code-row {
-  padding-left: 34px;
+  padding-left: 30px;
 }
 
 .service-name,
@@ -249,7 +254,7 @@ body {
 
 .entry-text {
   display: grid;
-  gap: 2px;
+  gap: 1px;
   min-width: 0;
 }
 
@@ -261,41 +266,41 @@ body {
 }
 
 .service-name {
-  font-size: 13px;
+  font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .account-name {
-  font-size: 11px;
+  font-size: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .otp-code {
-  font-size: 20px;
+  font-size: 17px;
   letter-spacing: 0.06em;
   text-align: left;
   font-family: "SF Mono", "Menlo", "Monaco", monospace;
 }
 
 .density-compact .otp-code {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .entry-code-meta {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
 }
 
 .timer {
   min-width: 0;
   text-align: left;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -316,8 +321,8 @@ body {
 .timer-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 9px;
+  gap: 5px;
+  padding: 4px 7px;
   border-radius: 999px;
   justify-self: end;
 }
@@ -336,8 +341,8 @@ body {
 
 .timer-dot {
   display: block;
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 999px;
 }
 
@@ -876,23 +881,23 @@ body {
 }
 
 .entry-marker {
-  width: 28px;
-  height: 28px;
-  flex: 0 0 28px;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
   display: grid;
   place-items: center;
   border: 1px solid rgba(19, 32, 51, 0.08);
   border-radius: 999px;
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
 
 .density-compact .entry-marker {
-  width: 26px;
-  height: 26px;
-  flex-basis: 26px;
-  font-size: 8px;
+  width: 22px;
+  height: 22px;
+  flex-basis: 22px;
+  font-size: 7px;
 }
 
 .color-grid {

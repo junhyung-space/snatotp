@@ -585,8 +585,13 @@ describe("popup app", () => {
     const popupStyles = readFileSync("src/popup/styles.css", "utf8");
 
     expect(popupStyles).toContain(".popup-shell {\n  box-sizing: border-box;");
+    expect(popupStyles).toContain("max-height: 600px;");
     expect(popupStyles).toContain("background: #f7fafc;");
-    expect(popupStyles).toContain(".entry-list {\n  display: grid;\n  gap: 12px;");
+    expect(popupStyles).toContain(".entry-list {\n  display: grid;\n  gap: 6px;");
+    expect(popupStyles).toContain("max-height: calc((60px * 8) + (6px * 7));");
+    expect(popupStyles).toContain("overflow-y: auto;");
+    expect(popupStyles).toContain(".density-compact .entry-list {\n  max-height: calc((56px * 8) + (6px * 7));");
+    expect(popupStyles).toContain("min-height: 60px;");
     expect(popupStyles).toContain("background: #ffffff;");
     expect(popupStyles).toContain("border: 1px solid rgba(19, 32, 51, 0.08);");
     expect(popupStyles).not.toContain("box-shadow");
